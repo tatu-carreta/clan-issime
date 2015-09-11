@@ -1,0 +1,142 @@
+CREATE TABLE usuarios
+(
+
+	idUsuario INT (11) NOT NULL AUTO_INCREMENT,				
+	usuario VARCHAR(50) DEFAULT 'system',								
+	clave VARCHAR(50) DEFAULT 'system',								
+	nombre VARCHAR(50),
+	apellido VARCHAR(50),
+	email VARCHAR(50),
+	direccionPorDefecto VARCHAR(200), 
+	ciudad VARCHAR(100),
+	codigoPostal VARCHAR(10),
+	provincia VARCHAR(100),
+	telefono VARCHAR(50),
+	formaDePagoPreferencial INT(11),
+	categoria VARCHAR(200),
+	PRIMARY KEY (idUsuario)
+
+);
+
+CREATE TABLE mayoristas
+(
+
+	idUsuario INT (11),								
+	cuit VARCHAR(200),										
+	condicionIva INT(11),										
+	PRIMARY KEY (idUsuario),
+	FOREIGN KEY (idUsuario )REFERENCES usuarios(idUsuario)
+);
+
+
+CREATE TABLE articulos
+(
+
+	codigo VARCHAR (100) NOT NULL,							
+	nombre VARCHAR(200),										
+	material VARCHAR(200),
+	idCategoria INT(11) NOT NULL,
+	precioMinorista REAL,
+	precioMayorista REAL,
+	fotoDestacada INT(11),
+	esOferta BOOLEAN,									
+	PRIMARY KEY (codigo)
+);
+
+CREATE TABLE colores
+(
+
+	idColor INT (11) NOT NULL AUTO_INCREMENT,
+	codigoArticulo VARCHAR(100),							
+	descripcion VARCHAR(200),										PRIMARY KEY (idColor),
+	FOREIGN KEY (codigoArticulo)REFERENCES articulos (codigo)
+);
+
+
+CREATE TABLE talles
+(
+
+	idTalle INT (11) NOT NULL AUTO_INCREMENT,
+	idColor INT (11),							
+	talle VARCHAR(200),											PRIMARY KEY (idTalle),
+	FOREIGN KEY (idColor)REFERENCES colores (idColor)
+);
+
+CREATE TABLE fotos
+(
+
+	idFoto INT (11) NOT NULL AUTO_INCREMENT,
+	idColor INT (11),
+	tipo CHAR(1),							
+	url VARCHAR(200),											PRIMARY KEY (idFoto),
+	FOREIGN KEY (idColor )REFERENCES colores (idColor)
+);
+
+CREATE TABLE categoria
+(
+
+	idCategoria INT (11) NOT NULL AUTO_INCREMENT,							
+	nombre VARCHAR(200),										
+	vigencia BOOLEAN,										
+	PRIMARY KEY (idCategoria)
+
+);
+
+
+
+CREATE TABLE compras
+(
+
+	idCompra INT (11) NOT NULL AUTO_INCREMENT,
+	idUsuario INT (11),
+	fecha DATE,							
+	estado VARCHAR(200),
+	montoFinal REAL,
+	tipoDePago INT (11),											PRIMARY KEY (idCompra),
+	FOREIGN KEY (idUsuario)REFERENCES usuarios(idUsuario)
+);
+
+
+CREATE TABLE articulosDeCompra
+(
+	idTalle INT (11),
+	idCompra INT (11),
+	fecha DATE,							
+	estado VARCHAR(200),
+	cantidad INT (11),
+	montoUnidad REAL,
+	PRIMARY KEY (idTalle),
+	FOREIGN KEY (idTalle)REFERENCES talles(idTalle),
+	FOREIGN KEY (idCompra)REFERENCES compras(idCompra)
+);
+
+	
+CREATE TABLE locales
+(
+
+	idLocal INT (11) NOT NULL AUTO_INCREMENT,							
+	idUsuario INT(11),											PRIMARY KEY (idLocal),
+	FOREIGN KEY (idUsuario)REFERENCES usuarios(idUsuario)
+
+);
+
+CREATE TABLE tiposDePago
+(
+
+	idTipoDePago INT (11) NOT NULL AUTO_INCREMENT,							
+	nombre VARCHAR(200),											PRIMARY KEY (idTipoDePago)
+
+);
+
+
+CREATE TABLE ofertas
+(
+ 
+	codigo VARCHAR(200) NOT NULL,							
+	idUsuario INT(11),
+	fechaDesde DATE,
+	fechaHasta DATE,
+	descripcion VARCHAR(200),										PRIMARY KEY (codigo),
+	FOREIGN KEY (idUsuario)REFERENCES usuarios(idUsuario)
+
+);

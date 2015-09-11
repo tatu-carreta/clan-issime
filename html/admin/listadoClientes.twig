@@ -1,0 +1,98 @@
+<script type="text/javascript" src="{{ paths.PATH_JS }}jquery-ui-1.10.3.custom.js"></script>
+<script src="{{ paths.PATH_JS }}usuarioFuncs.js"></script>
+<script>
+  $(function() {
+    $( "#accordion" ).accordion();
+  });
+  </script>
+  
+<section class="administrador">
+    <div class="boxBuscar">
+        <form action="{{ paths.PATH_CONTROLLER }}controladorAdmin.php?seccion=buscarCliente" method="post" class="formularioBusqueda">
+            <input class="buscar" type="text" name="buscar" placeholder="buscar" value="{% if (datoBusqueda is not null) %}{{ datoBusqueda }}{% endif %}">
+            <input class="btnBuscar" type="submit" value="">
+        </form>
+    </div>
+    <h2>CLIENTES MAYORISTAS Y MINORISTAS</h2>
+    <h3>Listado de Clientes</h3>
+    	<table class="encabezadoAcordeon tdListaClientes">
+            <tr>
+                <td>APELLIDO</td>
+                <td>NOMBRE</td>
+                <td>MAY / MIN</td>
+                <td>EMAIL</td>
+                <td>TELÉFONO</td>
+                <td></td>
+            </tr>
+        </table>
+        <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="formularioAgregarCliente">
+        <table class="ingresaNuevoCliente tdListaClientes">
+            <tr>
+                <td><input type="text" name="apellido" value="apellido" class="editable sinBorde"></td>
+                <td><input type="text" name="nombre" value="nombre" class="editable sinBorde"></td>
+                <td>MINORISTA</td>
+                <td><input type="text" name="email" value="email" class="editable sinBorde"></td>
+                <td><input type="text" name="telefono" value="teléfono" class="editable sinBorde"></td>
+                <input type="hidden" name="section" value="registroCliente">
+                <td><input class="btnGrisChico" type="submit" value="guardar"></td>
+
+            </tr>
+        </table>
+        </form>
+    {#{% if(perfil == 1) %}#}
+	<div id="accordion">
+            {% for datoCliente in clientes %}
+		<h3>
+                    <table class="tablaListaCliente tdListaClientes">
+                        <tr>
+                            <td>{{ datoCliente.apellidoPersona }}</td>
+                            <td>{{ datoCliente.nombrePersona }}</td>
+                            <td>{% if(datoCliente.cuit is not null) %}Mayorista{% else %}Minorista{% endif %}</td>
+                            <td>{{ datoCliente.email }}</td>
+                            <td>{{ datoCliente.telefono }}</td>
+                            <td>
+                                <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="formularioEliminarCliente">
+                                    <input type="hidden" name="iderUser" value="{{ datoCliente.iderUser }}">
+                                    <input type="hidden" name="section" value="borrarCliente">
+                                    <input type="submit" value="" class="btnEliminar eliminar">
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </h3>
+		<div class="divDatosCliente">
+                    <p>Detalle </p>
+                    <table>
+                        <tr>
+                            <td>
+                               <span>Nombre: {{ datoCliente.nombrePersona }}</span><br>
+                               <span>Apellido: {{ datoCliente.apellidoPersona }}</span><br>
+                               <span>Cliente: {% if(datoCliente.cuit is not null) %}Mayorista{% else %}Minorista{% endif %}</span><br>
+                               <span>Teléfono: {{ datoCliente.telefono }}</span><br>
+                               <span>Email: {{datoCliente.email }}
+                            </td>
+                            <td>
+                                <span>Dirección: {{ datoCliente.calle }} Nº{{ datoCliente.numero }} {{ datoCliente.piso }}{{ datoCliente.departamento }}</span><br>
+                                <span>Ciudad: {{ datoCliente.nombreCiudad }}</span><br>
+                                <span>Código Postal: {{ datoCliente.codigoPostal }}</span><br>
+                                <span>Provincia: {{ datoCliente.nombreProvincia }}</span><br>
+                                <span>Cumpleaños: {% if (datoCliente.fechaNacimiento is not null) %}{{ datoCliente.fechaNacimiento|date('d/m/Y') }} (Edad: {{datoCliente.edad}}){% endif %}</span>
+                            </td>
+                            <td>
+                            {% if(datoCliente.cuit is not null) %}
+                                <span>Nombre Fantasía: {{ datoCliente.nombreFantasia }}</span><br>
+                                <span>Razón Social: {{ datoCliente.razonSocial }}</span><br>
+                                <span>Cond.Iva: {{ datoCliente.nombreCondicionIva }}</span><br>
+                                <span>CUIT: {{ datoCliente.cuit }}</span>
+                            {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+		</div>
+                {% else %}
+            <h4>No se encontraron coincidencias con la búsqueda.</h4>
+        {% endfor %}
+        </div><!-- Cierra #accordion -->
+	<!--------------------------------------->
+        {#{% endif %}#}
+</section>

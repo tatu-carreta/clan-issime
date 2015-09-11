@@ -1,0 +1,94 @@
+<script src="{{ paths.PATH_JS }}pedidoFuncs.js"></script>
+<section>
+    <h2>Tu compra</h2>
+    <!-- tabla carrito-->
+    <table class="carrito">
+        <tr>
+            <th>Productos</th>
+            <th>Art./Color</th>
+            <th>
+               <table class="tallesCantPrecio"> 
+                    <tr>
+                        <td>Talle</td>
+                        <td>Precio Unit.</td>
+                        <td>Cantidad</td>
+                        <td>Total</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+               </table>
+            </th>  
+        </tr>
+        {% if (articulos|length > 0) %}
+            {% set total = 0 %}
+            {% set vez = 1 %}
+            {% set seguirComprando = "" %}
+            {% for art in articulos %}
+                {% for colores in art.colores %}
+                    {% if (vez == 1) %}
+                        {% set seguirComprando = art.datosArticulo.nombreCategoriaUrl %}
+                        {% set vez = 0 %}
+                    {% endif %}
+        <tr>
+            <td><img class="imgArtPedido" src="{{ paths.PATH_IMAGES_CATALOGO }}{{ colores.datosColor.nombreImagen }}" alt="{{ colores.datosColor.nombreImagen }}"></td>
+            <td>
+                <span class="nombreArtículo">{{ art.datosArticulo.nombreArticulo }}</span><br<
+                <span>{{ art.datosArticulo.codigoArticulo }}</span><br>
+                <span>Material: {{ art.datosArticulo.material }}</span><br>
+                <span>Color: {{ colores.datosColor.nombreColor }}</span>
+            </td>
+            <td>
+                        {% for talles in colores.talles %}
+                    <table class="tallesCantPrecio">
+                        <tr>
+                            <td>{{ talles.nombreTalle }}</td>
+                                    {% if(perfil == 2) %}
+                                        {% set precio = art.datosArticulo.precioMayorista %}
+                            <td>{{ art.datosArticulo.precioMayorista }}</td>
+                                    {% elseif (perfil == 3) %}
+                                        {% if(art.datosArticulo.precioOferta is not null) %}
+                                            {% set precio = art.datosArticulo.precioOferta %}
+                            <td>{{ art.datosArticulo.precioOferta }}</td>
+                                        {% else %}
+                                            {% set precio = art.datosArticulo.precioMinorista %}
+                            <td>{{ art.datosArticulo.precioMinorista }}</td>
+                                        {% endif %}
+                                    {% endif %}
+                            <td><input type="text" name="cant" class="inputCantidad" value="{{ talles.cantidad }}" data="{{ talles.idTalle }}"></td>
+                            <td>${{ precio * talles.cantidad }}</td>
+                            <td>{% set total = total + (precio * talles.cantidad) %}</td>
+                            <td>
+                                <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="formularioEliminarCarrito">
+                                    <input type="hidden" name="idTalle" value="{{ talles.idTalle }}">
+                                    <input type="hidden" name="section" value="borrarCarrito">
+                                    <input type="submit" value="" class="btnEliminar eliminarCarrito">
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                        {% endfor %}
+                </td>
+            </tr>
+                {% endfor %}
+            {% endfor %}
+            <tr class="total">
+                <td>Total Productos</td>
+                <td colspan="2" class="sumaTotal">${{ total }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">No hay productos en su carrito. Visite nuestro catálogo.</td>
+            </tr>
+        {% endif %}
+        </table>
+        <div>
+            <a class="btnGris" href="{% if localhost %}{% if (seguirComprando is defined) %}{{paths.PATH_CONTROLLER}}controladorCatalogo.php?categoria={{ seguirCategoria }}{% else %}{{ paths.PATH_CONTROLLER }}controladorVista.php?seccion=index{% endif %}{% else %}{% if (seguirComprando is defined) %}{{paths.PATH_HOME}}catalogo/{{ seguirCategoria }}{% else %}{{ paths.PATH_HOME }}{% endif %}{% endif %}">Seguir Comprando</a>
+            {#<a class="btnGris" href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=carrito-paso-2{% else %}{{paths.PATH_HOME}}micarrito/carrito-paso-2{% endif %}">Finalizar compra</a>#}
+            
+            <span class="error" style="float:right">* Por el momento no se pueden realizar las compras online. <br>Tendremos el servicio en funcionamiento en los próximos días.</span>
+        </div>
+    </section>
+
+
+
+

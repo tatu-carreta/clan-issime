@@ -1,0 +1,37 @@
+<script src="{{ paths.PATH_JS }}campanaFuncs.js"></script>
+<section class="administrador">
+    <h2>Campaña</h2>
+    <h3>Nueva Campaña</h3>
+    <div class="boxGrisBorde crearNuevaCampana">
+            {% for datoCamp in campanas %}
+            <div id="campana">
+                    <div class="nombreCampana">{{ datoCamp.nombreCampana }}</div>
+                    <div class="fechaInicio">{{ datoCamp.temporada }} {{datoCamp.anio}}</div>  
+            </div>
+
+            {% else %}
+				<span>No hay campaña actual predefinida. Cree una nueva:</span>
+				
+            {% endfor %}
+        </div>
+        <div class="boxGrisBorde crearNuevaCampana">
+            <form id="formCampana" action="{{ paths.PATH_PHP_ADMIN}}crearCampana.php" method="post">
+            <div id="campana">
+                <label><span>Nombre de la Campaña:</span><br>
+                    <input type="text" name="nombreCampana" />
+                </label>
+                <label><span>Temporada:</span><br>
+                    <select class="temp" name="temporada" required>
+                        <option value="Invierno">Invierno</option>
+                        <option value="Verano">Verano</option>
+                    </select>
+                </label>
+                <label><span>Año:</span><br>
+                    <input type="text" class="" name="anio" required />
+                </label>
+            </div>
+            <input class="{% if campanas == true %}advertencia {% endif %}btnCeleste" type="submit" value="Crear Campaña"/>
+                </form>
+            <p>Al crear una nueva campaña se archivan los productos de la campaña anterior y el catálogo queda vacío.</p>
+        </div>
+</section>

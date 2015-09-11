@@ -1,0 +1,63 @@
+<script src="{{ paths.PATH_JS }}jquery.numeric.js"></script>
+<script src="{{ paths.PATH_JS }}catalogoFuncs.js"></script>
+
+<section>
+	<h2>{{nombreCategoria}}</h2>
+	<div id="gallery">
+		<ul {% if perfil == 1 %}class="sortable"{% endif %}>
+		{% if perfil == 1 %}
+			<li class="agregarArt">
+				<a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=agregarArticulos&nombreCategoria={{nombreCategoria}}&nombreCategoriaURL={{nombreCategoriaURL}}&idCategoria={{ idCategoria}}{% else %}{{paths.PATH_HOME}}agregarArticulos/{{ idCategoria }}/{{nombreCategoria}}/{{nombreCategoriaURL}}/admin{% endif %}" class="btnAgregarArt mas editable">
+					agregar artículos
+				</a>
+			</li>
+		{% endif %}
+			{% for art in articulos %}
+			{% if art.nombreImagen is null %}
+				{% set imagen =  paths.PATH_IMAGES ~ 'sinFoto.jpg' %}
+			{% else %}
+				{% set imagen = paths.PATH_IMAGES_CATALOGO ~ art.nombreImagen %}
+			{% endif %}
+				<li  id="item-{{ art.idArticulo}}" data="{{ art.idArticulo}}">
+					<a  {% if perfil != 1 %}href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=infoArticulo&nombreArticulo={{art.nombreArticuloUrl}}{% else %}{{paths.PATH_HOME}}infoArticulo/{{art.nombreArticuloUrl}}{% endif %}"{%else%} href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=editarArticulo&nombreCategoriaURL={{nombreCategoriaURL}}&idArticulo={{ art.idArticulo}}{% else %}{{paths.PATH_HOME}}editarArticulo/{{art.idArticulo}}/{{nombreCategoriaURL}}/admin{%endif%}"{% endif%}><img src="{{ imagen}}" alt="Clan Issime"></a>
+ 					{% if perfil == 1 %}<a class="btnCerrar"><span>Cerrar </span></a>{% endif %}
+					<a {% if art.ofertaNuevo == 'N' %} class={% if perfil == 1 %} "nuevo"><span>nuevo</span> {% else %} nuevo2><span>nuevo</span>{%endif%}{% else %} {% if perfil == 1 %}class="setNuevo"><span>nuevo</span> {%endif%}{% endif %} </a>
+					<a {% if art.ofertaNuevo == 'O' %} class={% if perfil == 1 %} "oferta" ><span>oferta</span>{% else %} oferta2><span>oferta</span>{%endif%} {% else %} {% if perfil == 1 %}class="setOferta"><span>oferta</span> {% endif %}{% endif %}</a>
+					<span class="art">{{ art.nombreArticulo }}</span>
+					{% if perfil == 1 %}
+						<span class="precio editable"><input type="text" value="${{ art.precioMayorista }}" class="precioMayorista editable sinBorde"/> / <input type="text" value="${{ art.precioMinorista }}" class="precioMinorista editable sinBorde"/></span>
+						<a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=editarArticulo&idArticulo={{ art.idArticulo}}{% else %}{{paths.PATH_HOME}}editarArticulo/{{ art.idArticulo}}/admin{% endif %}" class="btnEditar"><span>Editar</span></a>
+					{% else %}
+					<span class="precio editable">{% if perfil == 2 %}${{ art.precioMayorista }} {% else %} ${{ art.precioMinorista }}{% endif %}</span>
+					{% endif %}
+				</li>
+				
+			{% else %}
+				<span>No se encontraron artículos cargados.</span>
+			{% endfor %}
+			
+			<!--
+			<li>
+				<a href="#"><img src="{{ paths.PATH_IMAGES }}producto.jpg" alt="Clan Issime"></a>
+				<a href="#" class="btnCerrar"><span>Cerrar</span></a>
+				<a class="nuevo" href="#"><span>nuevo</span></a>
+				<a class="oferta" href="#"><span>nuevo</span></a>
+				<span class="art">Musculosa mitch plano</span>
+				<span class="precio editable">$199 / $250</span>
+				<a href="#" class="btnEditar"><span>Editar</span></a>
+			</li>
+			<li>
+				<a href="#"><img src="{{ paths.PATH_IMAGES }}producto.jpg" alt="Clan Issime"></a>
+				<a href="#" class="btnCerrar"><span>Cerrar</span></a>
+				<span class="art">Musculosa mitch plano</span>
+				<span class="precio editable">$199 / $250</span>
+				<a href="#" class="btnEditar"><span>Editar</span></a>
+			</li>
+			-->
+			
+		</ul>
+	</div>
+	<div class="clear"></div>
+	
+<div id="loading"><span></span><br><img src="{{ paths.PATH_PHP_MODULES_IMAGES }}loading.gif" /></div>
+</section>

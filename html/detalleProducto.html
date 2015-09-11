@@ -1,0 +1,90 @@
+﻿<!Doctype html>
+<html>
+<head>
+<link href="../css/estilos.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Ruda:400,700,900' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+
+
+<script type="text/javascript" src="../js/jquery-1.9.1.js" ></script>
+
+<!-- Plugin BxSlider, catálogo de productos-->
+<script type="text/javascript" src="../js/jquery.bxslider.min.js" ></script>
+<script language="javascript">
+$(document).ready(function(){
+	$('.slideFotoAmpliada').bxSlider({
+	  mode: 'horizontal',
+	  captions: true
+	});
+});
+</script>
+	
+	<!-- Plugin para estilos del form-->
+<link rel="stylesheet" href="../css/jqtransform.css" type="text/css" media="all" />
+<script type="text/javascript" src="../js/jquery.jqtransform.js" ></script>
+<script language="javascript">
+		$(function(){
+			$('form').jqTransform({imgPath:'../images/form/'});
+		});
+</script>
+
+</head>
+<body>
+<div class="container catalogo">
+
+<section>
+	<h2>Camisas y remeras</h2>
+	<!-- galería de fotos artículos -->
+	<div class="colFotosArticulo">
+		<div class="contentMiniaturaArt">
+			<ul class="listaMiniaturaArt">
+				<li><img src="../images/ampliadas/producto.jpg" alt="Clan-Issime"></li>
+				<li><img src="../images/ampliadas/producto.jpg" alt="Clan-Issime"></li>
+			</ul>
+		</div>
+		<div class="contentFotoAmpliada">
+			<ul class="slideFotoAmpliada">
+				<li><img src="../images/ampliadas/producto.jpg" alt="Clan-Issime" title="Color: estampado"></li>
+				<li><img src="../images/ampliadas/producto.jpg" alt="Clan-Issime" title="Color: estampado"></li>
+				<li><img src="../images/ampliadas/producto.jpg" alt="Clan-Issime" title="Color: estampado"></li>
+			</ul>
+		</div>
+	</div>
+	<!-- detalle artículos -->
+	<div class="colDetalleArticulo">
+		<form action="" method="post">
+			<p class="numeroArt">Art: 00412503gaba4</p>
+			<p class="nombreArtículo"><strong>musculosa mitch plano</strong></p>
+			<p><strong>Material: viscosa</strong></p>
+			<p class="precio">$199</p>
+			<p>Seleccioná color</p>
+			<div class="">
+				<ul class="listaMiniaturaArt">
+					<li><img src="../images/ampliadas/producto.jpg" alt="Clan-Issime"></li>
+					<li><img src="../images/ampliadas/producto.jpg" alt="Clan-Issime"></li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<p>Seleccioná talle</p>
+			<div class="contentCheckTalles">
+				<label for="t24" class="labelTalle">24</label>
+				<input class="checkTalle" type="checkbox" name="talle24" id="t24">
+				<label for="t26" class="labelTalle active">26</label>
+				<input class="checkTalle" type="checkbox" name="talle26" id="t26">
+				<label for="t28" class="labelTalle">28</label>
+				<input class="checkTalle" type="checkbox" name="talle28" id="t28">
+				<label for="t30" class="labelTalle">30</label>
+				<input class="checkTalle" type="checkbox" name="talle30" id="t30">
+				<label for="t32" class="labelTalle">32</label>
+				<input class="checkTalle" type="checkbox" name="talle32" id="t32">
+			</div>
+			<input class="btn" type="submit" value="agregar al carrito"> 
+		</form>
+	</div>
+	<div class="clear"></div>
+</section>
+
+</div>
+</body>
+</html>

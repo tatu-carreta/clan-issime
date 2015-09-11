@@ -1,0 +1,286 @@
+<!-- rligthbox -->
+<script type="text/javascript" src="{{ paths.PATH_JS }}jquery.ui.core.min.js"></script>
+<script type="text/javascript" src="{{ paths.PATH_JS }}jquery.ui.widget.min.js"></script>
+<script type="text/javascript" src="{{ paths.PATH_JS }}jquery.ui.rlightbox.min.js"></script>
+
+
+<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+<link type="text/css" rel="stylesheet" href="{{ paths.PATH_CSS }}jquery-ui-1.10.1.custom.css" />
+<link type="text/css" rel="stylesheet" href="{{ paths.PATH_CSS }}lightbox.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+
+
+<script type="text/javascript">
+    jQuery(function($) {
+	$( ".lb_catalogo" ).rlightbox();
+    });
+</script>
+<!-- /rligthbox -->
+
+
+<section {% if perfil == 1 %} class="administrador"{% endif %} >
+    <h2>Lookbook</h2>
+    {% if perfil == 1 %} 
+    <h3>Carga de Imágenes</h3>
+    {% endif %} 
+    <div id="gallery">
+      
+        <div class="lookbook">
+        
+ {% if perfil == 1 %} 
+      <div class="parent">
+        <h4>Elija el grupo y cargue las imágenes:</h4>
+        <p class="aclaracion">Las imágenes deben medir 380px de ancho x 500px de alto.</p>
+          <select class="seccion">
+            {% for sect in secciones %}
+              <option value="{{sect.idLookbook}}">{{sect.titulo}}</option>
+            {% endfor %}
+          </select>
+          <input type="file" multiple class="imgMultiple">
+            <ul class="preview"></ul>
+            <div class="clear"></div>
+            <div><button class="publicar btnCeleste">Publicar</button></div>
+            <ul></ul>
+      </div>
+      
+      {% endif %} 
+
+
+            <div class="bloque">
+              
+            {% set section = lookbook[0].idLookbook %}
+            {% if perfil == 1 %}
+            <h4>Edite el nombre del grupo o elimine imágenes del mismo.</h4>
+                    <div class="needthis">
+                      <input type="text" class="titulo"  value="{{lookbook[0].titulo}}" /><a data-id="{{section}}" class="cambiarNombre btnGrisChico2">Cambiar nombre</a>
+                    </div>
+            {% else %}
+              {% if lookbook[0].imgChica != null %}
+                <h3>{{lookbook[0].titulo}}</h3>
+              {% endif %}
+            {% endif %}
+            <ul>
+
+            {% for look in lookbook %}
+              {% if section != look.idLookbook %}
+
+                    {% set section = look.idLookbook %}
+                    {% if perfil == 1 %}
+                      </ul>
+                      <div class="clear"></div>
+                    </div><div class="bloque">
+                    <h4>Edite el nombre del grupo o elimine imágenes del mismo.</h4>
+                      <div class="needthis">
+                        <input type="text" class="titulo"  value="{{look.titulo}}" /><a data-id="{{section}}" class="cambiarNombre btnGrisChico2">Cambiar nombre</a>
+                      </div>
+                      <ul>
+                      {% if look.imgChica == null %}
+                        </ul>
+                        <span class="aclaracion">No hay imágenes cargadas.</span><br>
+                      {% endif %}
+                    {% else %}
+                      {% if look.imgChica != null %}
+                        </ul>
+                        <div class="clear"></div>
+                        <h3>{{look.titulo}}</h3>
+                        <ul>
+                      {% endif %}
+                    {% endif %}
+
+              {% endif %}
+              {% if look.imgChica != null %}
+                <li><a href="{{ paths.PATH_IMAGES }}ampliadas/{{look.imgGrande}}" class="lb_catalogo"><img src="{{ paths.PATH_IMAGES}}lookbook/{{look.imgChica}}" width="150" height="197"></a>{% if perfil == 1 %} <a data-id="{{look.idImagenLookbook}}" class="eliminarBD btnCerrar"><span>Eliminar</span></a>{% endif %}</li>
+              {% endif %}
+            {% endfor %}
+
+
+            <div class="clear"></div>
+      
+          </div>
+                    
+            
+          </div>
+        
+    </div>
+</section>
+<script type="text/javascript">
+
+    jQuery.event.props.push( "dataTransfer" );       
+  function handleFileSelect(evt, showcase, tempArray) {
+
+     var files = evt.target.files;
+
+   for (var i = 0, f; f = files[i]; i++) {
+
+      // Only process image files.
+      if (!f.type.match('image.*')) {
+        continue;
+      }
+
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(file) {
+        return function(e) {
+
+          var img = {};
+          img.value = e.target.result;
+          img.name = file.name;
+          
+
+          tempArray.push(img);
+          console.log(tempArray);
+          renderTempImages(tempArray, showcase);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+    }
+  }
+  function renderTempImages(tempArray, showcase){
+      showcase.empty();
+      $.each(tempArray, function(index, img){
+        var li = $(document.createElement('li'));
+        
+        li.html('<img style="float:left" class="thumb" width="150" height="197" src="'+img.value+
+                            '" /><a class="eliminarTemp btnEliminar" data-index="'+index+'"><span>Eliminar</span></a>');
+     
+        showcase.append(li);
+        
+        
+      });
+      
+  }
+  function handleDragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+  }
+
+    $(document).ready( function(){
+        
+        section = $(".seccion").val();
+
+        
+
+        var tempArray = [];
+
+        $(document).on("dragover", ".dropzone", handleFileSelect);
+        $(document).on("drop", ".dropzone", function(evt){
+            evt.stopPropagation();
+            evt.preventDefault();
+            var showcase = $(this).find(".lookbook");
+            var idLookbook  = $(this).attr("data");
+            handleFileSelect(evt);
+        });
+
+
+        $(".seccion").on("change", function(){
+            section = $(this).val();
+        });
+
+        $(".cambiarNombre").on("click", function(){
+          var text = $(this).parent().find(".titulo").val();
+          var idSeccion = $(this).attr("data-id");
+          $.ajax({
+                  type: "POST",
+                  url: "../php/admin/cambiarNombreLookbook.php",
+                  data: {"text": text, "id": idSeccion  },
+                  success: function(data){
+                    if(data == 1)
+                    {
+                      alert("El nombre ha sido cambiado con éxito");
+                    }
+                    
+                    location.reload();
+                  }
+                });
+        });
+
+        $(".imgMultiple").on("change", function(e){
+            var showcase = $(this).parent().find(".preview");
+            handleFileSelect(e, showcase, tempArray);
+        });
+
+        $("#cancelar").hide();
+        var cancelar = false;
+        $("#imagenLookbook").on("change", function(){
+            if(cancelar == false)
+            {
+                 $("#cancelar").show();
+                cancelar = true;
+            }
+            
+            var fileReader = new FileReader();
+            fileReader.readAsDataURL(this.files[0]);
+            fileReader.onloadend = function(event){
+                $("#prevPrensa").attr("src", event.target.result);
+            }
+
+        });
+
+        $("#cancelar").on("click", function(){
+            console.log("cancelado");
+            $("#prevPrensa").removeAttr("src");
+            $("#imagenLookbook").val("");
+            cancelar = false;
+            $("#cancelar").hide();
+        });
+
+        $(document).on("click", ".eliminarTemp", function(e){
+          e.preventDefault();
+          var index = $(this).attr("data-index");
+          tempArray.splice(index,1);
+          var showcase = $(".preview")
+          renderTempImages(tempArray, showcase)
+
+        });
+
+        $(".eliminar").on("click", function(){
+            if (confirm("Está a punto de eliminar esta imagen. ¿Desea continuar?"))
+            {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                  type: "POST",
+                  url: "../php/admin/eliminarPrensa.php",
+                  data: {"id": id},
+                  success: function(datos){
+                    location.reload();
+                  }
+                });
+            }
+            
+        });
+
+        $(".eliminarBD").on("click", function(){
+          
+              var id = $(this).attr("data-id");
+              $.post(PATH_PHP_ADMIN + 'eliminarLookbook.php', { id: id}, function(data) { 
+                 
+                  
+                          location.reload();
+                      
+                    
+              });
+          
+          
+        });
+
+        $(".publicar").on("click", function(){
+
+                  $.post(PATH_PHP_ADMIN + 'cargarLookbook.php', { arrayImages: tempArray, section: section}, function(data) { 
+                   
+                    console.log(data);
+                    setTimeout(function() {
+                      location.reload();
+                      //window.location.href = PATH_CONTROLLER + "controladorAdmin.php?seccion=lookbook";
+                                                                           // window.location.href = PATH_HOME + "catalogo/"+categoriaURL+"/admin";
+                      }, 1000);
+                    
+                  });
+
+        });
+    });
+</script>

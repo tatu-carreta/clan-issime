@@ -1,0 +1,51 @@
+<script type="text/javascript" src="../js/jquery-1.9.1.js" ></script>
+<script  type="text/javascript" src="{{paths.PATH_JS}}detalle.js"></script>
+<!-- Plugin BxSlider, catálogo de productos-->
+<script type="text/javascript" src="../js/jquery.bxslider.min.js" ></script>
+<script language="javascript">
+$(document).ready(function(){
+	$('.slideFotoAmpliada').bxSlider({
+	  mode: 'horizontal',
+	  captions: true
+	});
+});
+</script>
+
+<script type="text/javascript" src="{{paths.PATH_JS}}jquery.jcarousel.min.js"></script>
+<script type="text/javascript" src="{{paths.PATH_JS}}jquery.pikachoose.min.js"></script>
+<script type="text/javascript" src="{{paths.PATH_JS}}jquery.touchwipe.min.js"></script>
+<script language="javascript">
+	$(document).ready(function (){
+			$(".pikachoose").PikaChoose({carousel:true, carouselVertical:true, autoPlay:false, text:{previous: "Anterior", next: "Siguiente" }});
+		});
+</script>
+<section>
+	<h2>{{articulo.nombreCategoria}}</h2>
+	<!-- galería de fotos artículos -->
+	<div class="colFotosArticulo">
+		<!-- cargar carrousel.twig --->
+
+		{% set capaDeInvisibilidad = false %}
+		{% for arr in arrayColores %}
+		<div class="carrouselColores {{arr.color.idColor}} {% if capaDeInvisibilidad %} invisible {% endif %}">
+			{% set capaDeInvisibilidad = true%}
+			{% import 'carrousel.twig' as carrousel%}
+			{{ carrousel.input(arr.imgChicas, arr.imgAmpliadas, arr.color, paths) }}
+		</div>
+		{%endfor%}
+			
+		
+	</div>
+	<!-- detalle artículos -->
+	<div class="colDetalleArticulo">
+		{% if user_type ==2%} <!--- esto va en 2 --->
+			{% import 'detalleMayorista.twig' as detalle%}
+			{{ detalle.input(articulo, arrayColores, arrayColores[0].talles, paths) }}
+		{%else%}
+			{% import 'detalleMinorista.twig' as detalle%}
+			{{ detalle.input(articulo, arrayColores, arrayColores[0].talles, paths) }}
+		{%endif%}
+	
+	</div>
+	<div class="clear"></div>
+</section>

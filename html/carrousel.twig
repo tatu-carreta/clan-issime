@@ -1,0 +1,16 @@
+{% macro input(imgC, imgG, cor, paths) %}
+   
+
+<div class="contentMiniaturaArt">
+	<ul class="listaMiniaturaArt pikachoose">
+		{% for key,value in imgC%}
+			
+		<li ><img src="{{paths.PATH_IMAGES_CATALOGO}}{{value.nombreImagen}}" ref="{{paths.PATH_IMAGES}}ampliadas/{{imgG[key].nombreImagen}}" alt="Clan-Issime"><span>Color: {{cor.nombreColor}}</span></li>
+				
+		{% endfor%}
+	</ul>
+</div>
+
+
+
+{% endmacro %}

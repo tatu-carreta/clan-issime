@@ -1,0 +1,45 @@
+
+<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="../ckeditor/adapters/jquery.js"></script>
+{% if perfil == 1 %} 
+<script type="text/javascript">
+    $(document).ready( function(){
+        $("#locales").ckeditor();
+    });
+</script>
+{% endif %}
+
+<section {% if perfil == 1 %} class="administrador" {% endif %}>
+    <h2>Locales en todo el país</h2>
+
+{% if perfil == 1 %} 
+<form id="formularioLocales" action="{{ paths.PATH_PHP_ADMIN }}modificarLocales.php" method="post" >
+
+<textarea id="locales" name="locales">
+
+    {% for loc in locales %}
+    
+        {{loc.texto}}
+  
+        
+    {% endfor %}
+
+</textarea>
+<input type="hidden" name="idLocal" value="{{locales[0].idTexto}}" />
+<input type="submit" value="Publicar" class="btnCeleste marginTop20" style="float:right" />
+</form>
+{% else %}
+    <div class="textoLocales">
+    {% autoescape false %}
+    {% for loc in locales %}
+    
+        {{loc.texto}}
+  
+        
+    {% endfor %}
+
+    {% endautoescape %}
+    </div>
+{% endif %}
+
+</section>

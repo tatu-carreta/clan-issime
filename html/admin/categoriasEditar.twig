@@ -1,0 +1,46 @@
+<div class="section">
+<script src="{{ paths.PATH_JS }}usuarioFuncs.js"></script>
+<script type="text/javascript">
+	var arrayCategorias = [];
+	{% if lastId is not defined or lastId is null %}
+		 var lastId = 0;
+	{% else %}
+		var lastId = {{lastId}};
+	{% endif %}
+	var counter = 0;
+	var noAbandonarLaPagina = true;
+	{%for cat in categorias%}
+		counter ++;
+	{% endfor%}
+	console.log(arrayCategorias);
+</script>
+<script src="{{ paths.PATH_JS }}categoriasFuncs.js"></script>
+  
+  
+  <section class="administrador">
+    <h2>CATEGORÍAS</h2>
+
+    
+		<form action="" method="">
+			{% if categorias | length > 0 %}
+		<h3>Categorías guardadas</h3>
+		
+			<div class="boxGrisBorde divCategoriasActuales sortable">
+			{%for cat in categorias%}
+				<p class="pointer" id="item-{{cat.idCategoria}}">{{cat.nombreCategoria}}<a class="btnEliminar eliminarDB" id="{{cat.idCategoria}}"><span>Eliminar</span></a></p>
+			{% endfor %}
+			<div class="clear"></div>
+                        </div>
+		{% endif %}
+		<h3>Categorías nuevas</h3>
+		<div class="boxGrisBorde divCategoriasActuales divCategoriasNuevas ">
+		</div>
+        <div class="divBtnAgregarCat">
+            <p><label><span>Nueva categoría:</span><br><input type="text" class="nombreCat" name=""></label><input class="btnCeleste agregarCat" type="" value="Crear Categoría"></p>
+            
+			<input class="btnCeleste guardarCampana " type="" value="Guardar cambios">
+
+        </div>
+    </form>
+	</div>
+</section>

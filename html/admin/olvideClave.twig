@@ -1,0 +1,21 @@
+<script type="text/javascript" src="{{ paths.PATH_JS }}usuarioFuncs.js"></script>
+<section>
+    <h2>Recuperación de Clave</h2>
+    <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="formularioOlvideClave">
+        <div class="recupClave">
+            <label><span>E-mail:</span><br>
+            <input type="email" name="email"> </label>
+            <select name="pregunta" required>
+                <option>Seleccione una pregunta</option>
+                {% for question in questions %}
+                <option value="{{ question.idPregunta }}">{{ question.nombrePregunta }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="respuesta">
+            <input type="hidden" name="continue" value="{{ continue }}">
+            <input type="hidden" name="section" value="olvideClave">
+            <div class="clear"></div>
+        </div>
+        <input type="submit" value="Enviar" class="btnGris">
+    </form>
+</section>

@@ -1,0 +1,112 @@
+<body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id))
+                return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+            <script src="{{ paths.PATH_JS }}exception.js"></script>
+             <script src="{{ paths.PATH_JS }}menu.js"></script>
+            <div class="ventaOnline"><img src="{{ paths.PATH_IMAGES }}venta-online.png" alt="Venta On line"></div>
+            <div class="container home">
+            <header>
+                <ul class="menuSup">
+                    {% if (nombreUsuario is defined) %}
+                        <li><a>{{ nombreUsuario }}</a></li>
+                    {% if (perfil != 1) %}
+                         <li><a href="{% if localhost %}{{ paths.PATH_CONTROLLER }}controladorAdmin.php?seccion=miperfil&iderUser={{ iderUser }}{% else %}{{paths.PATH_HOME}}miperfil/{{ iderUser }}{% endif %}">Tu Perfil</a></li>
+                         <li><a id="tuCompra" href="{% if localhost %}{{ paths.PATH_CONTROLLER }}controladorAdmin.php?seccion=carrito&iderUser={{ iderUser }}{% else %}{{paths.PATH_HOME}}micarrito/carrito-paso-1/{{ iderUser }}{% endif %}">Tu compra</a></li>
+                    {% endif %}
+                          <li><a href="{% if localhost %}{{ paths.PATH_CONTROLLER }}controladorAdmin.php?seccion=salir{% else %}{{paths.PATH_HOME}}salir{% endif %}">Salir</a></li>
+                    {% else %}
+                          <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=registrate{% else %}{{paths.PATH_HOME}}registrate{% endif %}">Registrate</a></li>
+                           <li><a id="tuCompra" href="{% if localhost %}{{ paths.PATH_CONTROLLER }}controladorAdmin.php?seccion=carrito&iderUser={{ iderUser }}{% else %}{{paths.PATH_HOME}}micarrito/carrito-paso-1/{{ iderUser }}{% endif %}">Tu compra</a></li>
+                           <li><a class="btnLoginHeader"{#href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=login{% else %}{{paths.PATH_HOME}}login{% endif %}"#}>Ingresá</a></li>
+                    {% endif %}
+                  </ul>
+                  <div class="clear"></div>
+                  <a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=index{% else %}{{paths.PATH_HOME}}index{% endif %}"><img class="logoClanIssime" src="{{ paths.PATH_IMAGES_PERMANENTES }}clanissime-marca.png" alt="Clan Issime" title="Clan Issime"></a>
+                  
+                  <nav>
+                        <div class="redesSociales">
+                             <a class="youtube" href="https://www.youtube.com/channel/UChzhDWHX0v-8lfdk27zyQwQ" title="Seguí nuestro canal de YouTube" target="_blank">Seguí nuestro canal de YouTube</a>
+                             <a class="twitter" href="https://twitter.com/clan_issime" title="Seguinos en Twitter" target="_blank">Seguinos en Twitter</a>
+                             <a class="pinterest" href="http://www.pinterest.com/ClanIssime" title="Seguí nuestros pines en Pinterest" target="_blank">Seguí nuestros pines en Pinterest</a>
+                             <a class="facebook" href="http://www.facebook.com/pages/Clan-Issime/334947416115" title="Seguí nuestras novedades por Facebook" target="_blank">Seguí nuestras novedades por Facebook</a>
+                         </div>
+                         
+                          <ul class="flexnav" data-breakpoint="800">
+                                <li class="" ><a href="" id="aCatalogo" class="subMenuDesp mainButtons" >Catálogo</a>
+                                                    <ul id="catalogo" class="mainButtons">
+                                                         <div class="menuDesplegable desplegable ">
+                                                                <div class="triang"></div>
+								{% set size = categorias | length %}
+								{% set perlist = (size // 3 ) +1 %}
+								{% set counter = 0%}
+								<li>
+                                                                    <ul class="subColumna">
+                                                                        {%for cat in categorias%}
+                                                                                {% set counter = counter + 1 %}
+                                                                                <!--<div class="columnaMenu">-->
+                                                                                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorCatalogo.php?categoria={{cat.nombreCategoriaUrl}}{% else %}{{paths.PATH_HOME}}catalogo/{{cat.nombreCategoriaUrl}}{% endif %}">{{cat.nombreCategoria}}</a></li>
+                                                                                {% if counter == (perlist) or counter == 2* perlist %}
+                                                                            </ul>
+                                                                            <ul class="subColumna">
+                                                                                {% endif %}
+                                                                                <!--</div>-->
+                                                                                {% else %}
+                                                                                <span>No hay categorías cargadas.</span>
+                                                                        {% endfor%}
+                                                                    </ul>
+                                                                </li>
+                                                                <div class="clear"></div>
+                                                         </div>
+                                                     </ul>
+                                                </li><!-- / cierra li de catalogo -->
+                                                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=lookbook{% else %}{{paths.PATH_HOME}}lookbook{% endif %}">Lookbook</a></li>
+                                                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=prensa{% else %}{{paths.PATH_HOME}}prensa{% endif %}">Prensa</a></li>
+                                                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=locales{% else %}{{paths.PATH_HOME}}locales{% endif %}">Locales</a></li>
+                                                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=empresa{% else %}{{paths.PATH_HOME}}empresa{% endif %}">Empresa</a></li>
+                                                <li><a href="" id="aContacto" class="mainButtons2">Contacto</a>
+                                                        <ul id="menuContacto" class="sub_menu mainButtons2" >
+                                                            <div class="menuDesplegable2 desplegable2 ">
+                                                                <div class="triang"></div>
+                                                                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=consultas{% else %}{{paths.PATH_HOME}}consultas{% endif %}">Consultas</a></li>
+                                                                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=unite{% else %}{{paths.PATH_HOME}}unite{% endif %}">Unite a Clan</a></li>
+                                                                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=ventasxmayor{% else %}{{paths.PATH_HOME}}ventasxmayor{% endif %}">Ventas por mayor</a></li>
+                                                            </div>
+                                                        </ul>
+                                                </li><!-- / cierra li de contacto -->
+                                            </ul>
+                                            <div class="clear"></div>
+                                        </nav>
+                                        <div class="menu-button" style="display:none">Menu</div>
+                                        <div id="ventanaCarrito" class="divEmergente">
+                                            <div class="triang"></div>
+                                            <a class="btnCerrarGris cerrarEmergente"><span>Cerrar</span></a>
+                                            <img class="imgArtPedido" src="" alt="">
+                                            <p>Agregaste a carrito<br>
+                                                <span>Nombre del producto</span><br>
+                                                <span><strong>$555</strong></span></p>
+                                            <input type="submit" class="btnGris" value="Ver Carrito">
+                                        </div>
+
+                                        <div id="ventanaLogin" class="divEmergente" style="display:none">
+                                            <div class="triang"></div>
+                                            <a class="btnCerrarGris cerrarEmergente"><span>Cerrar</span></a>
+                                            <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="loginHeader">
+                                                <label><span>Email:</span> <input type="text" name="user"></label>
+                                                <label><span>Clave:</span> <input type="password" name="pass"></label>
+                                                <p><a class="" href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=olvideClave{% else %}{{paths.PATH_HOME}}olvideClave{% endif %}">¿Olvidaste tu clave?</a></p>
+                                                <input type="hidden" name="section" value="inicio">
+                                                <input type="hidden" name="continue" value="{{ continue }}">
+                                                <input type="hidden" name="registroLogin" value="0022p">
+                                                <input type="hidden" name="js" value="0022p">
+                                                <input class="btnGris" type="submit" value="Ingresar">
+                                            </form>
+                                        </div>
+                                    </header>

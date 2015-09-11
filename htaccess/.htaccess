@@ -1,0 +1,50 @@
+#AddHandler x-httpd-php5 .php
+# 
+
+
+Options +FollowSymLinks  
+RewriteEngine On  
+
+RewriteBase /
+#IndexOptions +Charset=UTF-8
+RewriteCond %{SCRIPT_FILENAME} !-d  
+RewriteCond %{SCRIPT_FILENAME} !-f  
+
+RewriteRule ^(salir|registrate|olvideClave|login|lookbook|prensa|locales)/?$ controller/controladorAdmin.php?seccion=$1 [L]
+RewriteRule ^(empresa|consultas|unite|ventasxmayor|corredores|index)/?$ controller/controladorVista.php?seccion=$1 [L]
+
+RewriteRule ^(login/(.*))/?$ controller/controladorAdmin.php?seccion=login&error=$2 [L]
+RewriteRule ^(informe/(.*))/?$ controller/controladorVista.php?seccion=informe&txt=$2 [L]
+
+RewriteRule ^(pedidos/admin)/?$ controller/controladorAdmin.php?seccion=pedidos [L]
+RewriteRule ^(listadoClientes/admin)/?$ controller/controladorAdmin.php?seccion=listadoClientes [L]
+RewriteRule ^(categorias/admin)/?$ controller/controladorAdmin.php?seccion=categorias [L]
+RewriteRule ^(campa/admin)/?$ controller/controladorAdmin.php?seccion=campa [L]
+
+RewriteRule ^(miperfil/(.*))/?$ controller/controladorAdmin.php?seccion=miperfil&iderUser=$2 [L]
+RewriteRule ^(agregarArticulos/(.*)/(.*)/(.*)/admin)/?$ controller/controladorAdmin.php?seccion=agregarArticulos&idCategoria=$2&nombreCategoria=$3&nombreCategoriaURL=$4 [L]
+RewriteRule ^(infoArticulo/(.*))/?$ controller/controladorAdmin.php?seccion=infoArticulo&nombreArticulo=$2 [L]
+RewriteRule ^(editarArticulo/(.*)/(.*)/admin)/?$ controller/controladorAdmin.php?seccion=editarArticulo&idArticulo=$2&nombreCategoriaURL=$3 [L]
+
+RewriteRule ^(securityQuestions/(.*)/(.*))/?$ controller/controladorAdmin.php?seccion=securityQuestions&iderUser=$2&sq=$3 [L]
+
+RewriteRule ^(micarrito/(.*)/sr)/?$ controller/controladorAdmin.php?seccion=$2&reg=sr [L]
+RewriteRule ^(micarrito/carrito-paso-1/(.*))/?$ controller/controladorAdmin.php?seccion=carrito [L]
+RewriteRule ^(micarrito/carrito-paso-1)/?$ controller/controladorAdmin.php?seccion=carrito [L]
+RewriteRule ^(micarrito/carrito-paso-2)/?$ controller/controladorAdmin.php?seccion=carrito-paso-2 [L]
+RewriteRule ^(micarrito/(.*))/?$ controller/controladorAdmin.php?seccion=$2 [L]
+
+RewriteRule ^(catalogo/(.*)/admin)/?$ controller/controladorCatalogo.php?categoria=$2 [L]
+RewriteRule ^(catalogo/(.*))/?$ controller/controladorCatalogo.php?categoria=$2 [L]
+
+
+#RewriteRule ^([^/\.]+)/?$ php/$1.php? [L]
+
+
+ErrorDocument 404 http://clan-issime.com/
+
+
+
+
+
+

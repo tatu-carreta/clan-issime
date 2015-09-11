@@ -1,0 +1,84 @@
+<script type="text/javascript" src="{{ paths.PATH_JS }}usuarioFuncs.js"></script>
+<script src="{{ paths.PATH_JS }}dataMayoristaFuncs.js"></script>
+<section>
+    <h2>Mi perfil</h2>
+    <!-- div registro -->
+    <div class="contentRegistro">
+        <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="formRegistroModificado">
+            <h4>Datos personales</h4>
+            <label>Nombre:<input type="text" name="nombre" value="{{ datoPersona.nombrePersona }}"></label>
+            <label>Apellido:<input type="text" name="apellido" value="{{ datoPersona.apellidoPersona }}"></label>
+            <label>E-mail:<input type="email" name="email" value="{{ datoPersona.email }}" readonly="true"></label><br>
+            <label>Nueva Contraseña:<input type="password" name="clave"></label>
+            <label>Confirmar Nueva Contraseña:<input type="password" name="confirmClave"></label>
+            <label class="fechaNac">Fecha de Nacimiento:<input type="text" name="fechaNac" value="{{ datoPersona.fechaNacimiento|date('d/m/Y') }}">Formato: (dd/mm/aaaa)</label><br>
+            
+            <h4>Dirección de Envío</h4>
+            <label>Calle:<input type="text" name="calle" value="{{ datoPersona.calle }}"></label>
+            <label>Nº:<input type="text" name="numero" value="{% if datoPersona.numero == 0 %}-{% else %}{{ datoPersona.numero }}{% endif %}"></label>
+            <label>Piso:<input type="text" name="piso" value="{{ datoPersona.piso }}"></label><br>
+            <label>Departamento:<input type="text" name="departamento" value="{{ datoPersona.departamento }}"></label>
+            <label>Provincia:<select class="selectProvincia" name="provincia">
+                    <option value="">Seleccione una Provincia</option>
+                {% for prov in provincias %}
+                    <option value="{{ prov.idProvincia }}" {% if(prov.idProvincia == datoPersona.idProvincia) %}selected{% endif %}>{{ prov.nombreProvincia }}</option>
+                {% endfor %}
+                </select></label><br>
+            <label>Localidad:<select class="selectLocalidad" name="localidad">
+                {% for loc in localidades %}
+                            <option value="{{ loc.idCiudad }}" {% if(loc.idCiudad == datoPersona.idCiudad ) %}selected{% endif %}>{{ loc.nombreCiudad }}</option>
+                {% else %}
+                            <option value="">Seleccione una Localidad</option>
+                {% endfor %}
+                        </select></label><br>
+                    <label>Código Postal:<input type="text" name="codPostal" value="{{ datoPersona.codigoPostal }}"></label>
+                    <label>Teléfono:<input type="text" name="telefono" value="{{ datoPersona.telefono }}"></label>
+                    <div class="clear"></div>    
+                    <div id="datoMayorista">
+                {% if(datoPersona.cuit is not null) %}
+                            <h4>Datos de Facturación</h4>
+                            <label>CUIT:<input type="text" name="cuit" value="{{ datoPersona.cuit }}"></label><br>
+                            <label>Condición Iva:<select name="condIva" value="{{ datoPersona.condIva }}" class="condIva">
+                                    <option value="">Seleccione una Condición</option>
+                    {% for cond in condiciones%}
+                                    <option value="{{ cond.idCondicionIva }}" {% if(cond.idCondicionIva == datoPersona.idCondicionIva ) %}selected{% endif %}>{{ cond.nombreCondicionIva }}</option>
+                    {% endfor %}
+                                </select></label><br>
+                            <label>Razón Social:<input type="text" name="razonSocial" value="{{ datoPersona.razonSocial }}"></label><br>
+                            <label>Nombre de Fantasía:<input type="text" name="nombreFantasia" value="{{ datoPersona.nombreFantasia }}"></label><br>
+                            <div class="clear"></div>
+                            <div class="direccionEnvio">
+                                <h4>Dirección Fiscal</h4>
+                                <label>Calle:<br><input type="text" name="calleFiscal" value="{{ datoPersona.calleFiscal }}"></label>
+                                <label>Nº:<br><input type="text" name="numeroFiscal" value="{% if datoPersona.numeroFiscal == 0 %}-{% else %}{{ datoPersona.numeroFiscal }}{% endif %}"></label>
+                                <label>Piso:<br><input type="text" name="pisoFiscal" value="{{ datoPersona.pisoFiscal }}"></label><br>
+                                <label>Departamento:<br><input type="text" name="departamentoFiscal" value="{{ datoPersona.departamentoFiscal }}"></label>
+                                <label>Provincia:<br><select class="selectProvinciaFiscal" name="provinciaFiscal">
+                                        <option value="">Seleccione una Provincia</option>
+					{% for prov in provincias %}
+                                        <option value="{{ prov.idProvincia }}" {% if(prov.idProvincia == datoPersona.idProvinciaFiscal) %}selected{% endif %}>{{ prov.nombreProvincia }}</option>
+                {% endfor %}
+                                    </select></label>
+                                <label>Localidad:<br><select class="selectLocalidadFiscal" name="localidadFiscal">
+                                        {% for loc in localidades %}
+                                                <option value="{{ loc.idCiudad }}" {% if(loc.idCiudad == datoPersona.idCiudadFiscal ) %}selected{% endif %}>{{ loc.nombreCiudad }}</option>
+                {% else %}
+                                                <option value="">Seleccione una Localidad</option>
+                {% endfor %}
+                                            </select></label>
+                                        <label>Código Postal:<br><input type="text" name="codPostalFiscal" value="{{ datoPersona.codPostalFiscal }}"></label>
+                                        <label>Teléfono:<br><input type="text" name="telefonoFiscal" value="{{ datoPersona.telefonoFiscal }}"></label><br>
+                                        <div class="clear"></div>
+                                    </div>
+                {% endif %}
+                                </div>
+                                <input type="hidden" name="tipoUsuario" value="{% if(datoPersona.cuit is not null) %}may{% else %}min{% endif %}">
+                                <input type="hidden" name="usuario" value="{{ datoPersona.iderUser }}">
+                                <input type="hidden" name="section" value="cambiarDatos">
+                                <div class="clear"></div>
+                                <div>
+                                    <input class="btnGris" type="submit" value="Enviar">
+                                </div>
+                            </form>
+                        </div>
+                    </section>

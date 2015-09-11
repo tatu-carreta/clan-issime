@@ -1,0 +1,34 @@
+<section>
+    <h2>Tu compra</h2>
+    <div class="pasosRegistroCompra">
+        <div class="columnaRegistroCompra">
+            <p>Si te registrás accedés a
+                muchos beneficios y simplificás tus próximas compras</p>
+            <form action="{{ paths.PATH_CONTROLLER }}controladorAdmin.php" method="get">
+                <input type="hidden" name="seccion" value="registrate">
+                <input type="hidden" name="reg" value="sr">
+                <input type="submit" value="Registrarme ahora" class="btnGris">
+            </form>
+            <p><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=carrito-paso-2&reg=sr{% else %}{{paths.PATH_HOME}}micarrito/carrito-paso-2/sr{% endif %}">Comprar sin registrarme</a></p>
+        </div>
+        <div class="columnaRegistroCompra">
+            <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="loginHeader">
+                <p><label><span>Nombre Usuario:</span> <input type="text" name="user"></label></p>
+                <p><label><span>Contraseña:</span> <input type="password" name="pass"></label></p>
+                <p><a class="" href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=olvideClave{% else %}{{paths.PATH_HOME}}olvideClave{% endif %}">¿Olvidaste tu clave?</a></p>
+                <input type="hidden" name="section" value="inicio">
+                <input type="hidden" name="continue" value="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=carrito-paso-2{% else %}{{paths.PATH_HOME}}micarrito/carrito-paso-2{% endif %}">
+                <input type="hidden" name="reg" value="sR">
+                <input type="hidden" name="registroLogin" value="0022p">
+                <input type="hidden" name="js" value="0022p">
+                <input class="btnGris" type="submit" value="Ingresar">
+            </form>
+        </div>
+        {#<div class="columnaRegistroCompra sinMargen">
+            <p>Podés acceder usando<br>
+                tu cuenta de Facebook</p>
+        </div>#}
+        <div class="clear"></div>
+        <a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=carrito{% else %}{{paths.PATH_HOME}}micarrito/carrito-paso-1{% endif %}" class="btnGris">Volver al carrito</a>
+    </div>
+</section>

@@ -1,0 +1,86 @@
+</div><!-- CIERRA CONTAINER -->
+
+<footer>
+    <div class="container logoFooter">
+        <img src="{{ paths.PATH_IMAGES_PERMANENTES }}clanissime-marca.png" alt="Clan Issime" title="Clan Issime" class="pie">
+        <a href="http://www.laurachuburu.com.ar" target="_blank" class="lauraChuburu"><span>www.laurachuburu.com.ar</span></a>
+    </div>
+    <div class="menu">
+        <div class="container">
+            <div class="menuCatalogo">
+                <h5>CATÁLOGO</h5>
+                <ul class="menuCatalogo">
+				
+					{%for cat in categorias%}
+						
+							<li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorCatalogo.php?categoria={{cat.nombreCategoriaUrl}}{% else %}{{paths.PATH_HOME}}catalogo/{{cat.nombreCategoriaUrl}}{% endif %}">{{cat.nombreCategoria}}</a></li>
+							
+					{% endfor%}
+					
+                </ul>
+            </div>
+            <ul class="menuGral">
+                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=lookbook{% else %}{{paths.PATH_HOME}}lookbook{% endif %}">Lookbook</a></li>
+                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=prensa{% else %}{{paths.PATH_HOME}}prensa{% endif %}">Prensa</a></li>
+                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=locales{% else %}{{paths.PATH_HOME}}locales{% endif %}">Locales</a></li>
+                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=empresa{% else %}{{paths.PATH_HOME}}empresa{% endif %}">Empresa</a></li>
+                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=consultas{% else %}{{paths.PATH_HOME}}consultas{% endif %}">Consultas</a></li>
+                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=unite{% else %}{{paths.PATH_HOME}}unite{% endif %}">Unite a Clan</a></li>
+                <li><a href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorVista.php?seccion=ventasxmayor{% else %}{{paths.PATH_HOME}}ventasxmayor{% endif %}">Ventas por mayor</a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+    
+    <div class="mg">
+        <div class="megusta container">
+            <div class="fb-like" data-href="http://www.facebook.com/pages/Clan-Issime/334947416115" data-send="false" data-width="600" data-show-faces="false"></div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    
+    <div class="tarjetas">
+        <div class="container">
+            <p>Formas de pago</p>
+            <img src="{{ paths.PATH_IMAGES_TARJETAS }}visa.jpg" alt="Tarjeta Visa">
+            <img src="{{ paths.PATH_IMAGES_TARJETAS }}mastercard.jpg" alt="Tarjeta Mastercard">
+            <img src="{{ paths.PATH_IMAGES_TARJETAS }}american.jpg" alt="Tarjeta American Sxpress">
+            <img src="{{ paths.PATH_IMAGES_TARJETAS }}naranja.jpg" alt="Tarjeta Naranja">
+            <img src="{{ paths.PATH_IMAGES_TARJETAS }}nativa.jpg" alt="Tarjeta Nativa">
+            <img src="{{ paths.PATH_IMAGES_TARJETAS }}shopping.jpg" alt="Tarjeta Shopping">
+            <img src="{{ paths.PATH_IMAGES_TARJETAS }}cencosud.jpg" alt="Tarjeta Cencosud">
+            <img src="{{ paths.PATH_IMAGES_TARJETAS }}argencard.jpg" alt="Tarjeta Argencard">
+            <img src="{{ paths.PATH_IMAGES_TARJETAS }}cabal.jpg" alt="Tarjeta Cabal">
+            <img src="{{ paths.PATH_IMAGES_TARJETAS }}mercado_pago.jpg" alt="Mercado Pago">
+            <!--data fiscal -->
+            <a href="http://qr.afip.gob.ar/?qr=7S9I1dKPwHOObXsnj_Sn0w,," target="_F960AFIPInfo"><img src="http://www.afip.gob.ar/images/f960/DATAWEB.jpg" border="0" style="float:right; width:50px; height:auto"></a>
+            <!--/data fiscal -->
+            <div class="clear"></div>
+        </div>
+    </div>
+    
+    
+    
+    
+</footer>
+
+<!--incluye Google Analytics-->
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    var pageTracker = _gat._getTracker("UA-4835558-1");
+    pageTracker._initData();
+    pageTracker._trackPageview();
+</script>
+<!--incluye jQuery del menu-->
+<script src="{{ paths.PATH_JS }}jquery.flexnav.js" type="text/javascript"></script>
+<script>
+   // $(".flexnav").flexNav({'animationSpeed': 'fast'});
+</script>
+
+
+
+</body>
+</html>

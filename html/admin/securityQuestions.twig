@@ -1,0 +1,20 @@
+<script type="text/javascript" src="{{ paths.PATH_JS }}usuarioFuncs.js"></script>
+<section>
+    <h2>Registrate</h2>
+    <div class="contentRegistro">
+        <h4>Seleccioná una pregunta de seguridad</h4>
+        <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="formularioSecurityQuestions">
+            <p><select name="pregunta" required>
+                <option>Seleccioná una pregunta</option>
+                {% for question in questions %}
+                <option value="{{ question.idPregunta }}">{{ question.nombrePregunta }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="respuesta">
+            <input type="hidden" name="continue" value="{{ continue }}">
+            <input type="hidden" name="iderUser" value="{{ iderUser }}">
+            <input type="hidden" name="section" value="securityQuestion"></p>
+            <input type="submit" value="Enviar" class="btnGris">
+        </form>
+    </div>
+</section>

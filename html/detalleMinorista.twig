@@ -1,0 +1,38 @@
+{% macro input(articulo, arrayColores, talles, paths) %}
+ <script type="text/javascript">
+	 tipoUsuario = 3;
+ </script>
+
+
+			<p class="numeroArt">Art: {{articulo.codigoArticulo}}</p>
+			<p class="nombreArtículo"><strong>{{articulo.nombreArticulo}}</strong></p>
+			<p><strong>Material: {{articulo.material}}</strong></p>
+			<p class="precio">${{articulo.precioMinorista}}</p>
+			<p>Seleccioná color</p>
+			<div class="">
+				<ul class="listaMiniaturaArt">
+				{% for cor in arrayColores%}
+					<li class="coloresLi actualizarCarrousel" id="{{cor.color.idColor}}"><img src="{{paths.PATH_IMAGES_CATALOGO}}{{cor.imgChicas[0].nombreImagen}}" alt="Clan-Issime"></li>
+				{%endfor%}
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<p>Seleccioná talle</p>
+			{% for cor in arrayColores%}
+			<div class="contentCheckTallesInvisible" id="talles-{{cor.color.idColor}}">
+				{% for tall in cor.talles%}
+					
+					{% if tall.valor == 1 %}
+						<label  class="labelTalle agregarMinorista">{{tall.nombreTalle}}
+						<input class="checkTalle" type="hidden" value="{{tall.idTalle}}" name="talle24" id="{{tall.nombreTalle}}"></label>
+					{% endif %}
+		
+					
+				{% endfor%}
+			</div>
+			{%endfor%}
+                        <a href="#tuCompra" class="btnGris" id="agregarAlCarrito">Agregar al carrito</a> 
+
+
+		
+{% endmacro %}

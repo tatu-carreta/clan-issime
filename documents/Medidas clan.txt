@@ -1,0 +1,3 @@
+miniatura: 70x90
+catalogo: 150x195
+ampliacion: 380x500

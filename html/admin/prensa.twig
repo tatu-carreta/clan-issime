@@ -1,0 +1,93 @@
+<section {% if perfil == 1 %} class="administrador" {% endif %} >
+    <h2>Prensa</h2>
+    
+    {% if perfil == 1 %} 
+    <h3>Carga de articulos </h3>
+    <h4>Ingreso nombre de la revista y fecha:</h4>
+        <form enctype="multipart/form-data" id="formPrensa" action="../php/admin/cargarPrensa.php" method="post">
+            <input type="text" name="titulo" placeholder="Título" class="tituloRevPrensa"/>
+            <p class="aclaracion">Las imágenes deben medir 308px de ancho x 415px de alto.</p>
+            <input type="file" name="imagen" id="imagenPrensa"/>
+            
+            <div class="cargaImgPrensa" style="display:none">
+                <img id="prevPrensa">
+                <a id='cancelar' class="btnEliminar"><span>Cancelar</span></a>
+            </div>
+            <p><input type="submit" value="publicar" class="btnCeleste"/></p>
+        </form>
+    {% endif %} 
+    <div id="prensa">
+        <ul>
+
+       {% for art in prensa %}
+            <li><img src="{{ paths.PATH_IMAGES_PRENSA }}{{art.imagen}}" width="308" height="415" title="{{art.titulo}}">{% if perfil == 1 %} <a class="btnEliminar eliminar" data-id="{{art.idPrensa}}"><span>Eliminar</span></a>{% endif %} </li>
+       {% endfor %}
+
+        <!--<li><img src="{{ paths.PATH_IMAGES_PRENSA }}14-03-17-Clan-Issime-Para-Ti-02.jpg" width="308" height="415" title="Para Ti, marzo 2014"></li>
+        	<li><img src="{{ paths.PATH_IMAGES_PRENSA }}14-03-17--clan-issime-para-ti-anticipo-coleccion.jpg" width="308" height="415" title="Para Ti, marzo 2014"></li>
+			<li><img src="{{ paths.PATH_IMAGES_PRENSA }}14-03-07--clan-issime-shop.jpg" width="308" height="415" title="Shop, marzo 2014"></li>
+			<li><img src="{{ paths.PATH_IMAGES_PRENSA }}27-02-2014-Clan-Issime-La-Nacion-Moda-&-Belleza.jpg" width="308" height="415" title="La Nación Moda & Belleza, febrero 2013"></li>   
+			<li><img src="{{ paths.PATH_IMAGES_PRENSA }}14-02-27--clan-issime--terra-argentina.jpg" width="308" height="415" title="Terra Argentina, febrero 2014"></li>    
+			<li><img src="{{ paths.PATH_IMAGES_PRENSA }}14-02-27--clan-issime--ohlala-online.jpg" width="308" height="415" title="Oh lala, febrero 2014"></li>
+			<li><img src="{{ paths.PATH_IMAGES_PRENSA }}14-02-25--clan-issime--la-nacion.jpg" width="308" height="415" title="La Nación, febrero 2014"></li>
+			<li><img src="{{ paths.PATH_IMAGES_PRENSA }}14-02-23--Clan-Issime--la-nacion.jpg" width="308" height="415" title="La Nación, febrero 2014"></li> 	
+
+            <li><img src="{{ paths.PATH_IMAGES_PRENSA }}13-12-16--clan-issime--lonely-planet.jpg" width="308" height="415" title="Lonely Planet, diciembre 2013"></li>
+            <li><img src="{{ paths.PATH_IMAGES_PRENSA }}13-12-16-clan-issime--lonely-planet.jpg" width="308" height="415" title="Lonely Planet, diciembre 2013"></li>
+            <li><img src="{{ paths.PATH_IMAGES_PRENSA }}13-12-15--clan-issime--7-dias-02.jpg" width="308" height="415" title="Revista 7 Días, diciembre 2013"></li>
+            <li><img src="{{ paths.PATH_IMAGES_PRENSA }}13-12-15--clan-issime--7-dias-01.jpg" width="308" height="415" title="Revista 7 Días, diciembre 2013"></li>
+            <li><img src="{{ paths.PATH_IMAGES_PRENSA }}13-12-12--clan-issime-mia.jpg" width="308" height="415" title="Revista Mía, diciembre 2013"></li>
+            <li><img src="{{ paths.PATH_IMAGES_PRENSA }}13-12-12--clan-issime-ahora-mama.jpg" width="308" height="415" title="Ahora mamá, dicembre 2013"></li>
+            <li><img src="{{ paths.PATH_IMAGES_PRENSA }}13-12-10-Clan-issime-ah-guapas.jpg" width="308" height="415" title="Guapas, diciembre 2013"></li>
+            <li><img src="{{ paths.PATH_IMAGES_PRENSA }}13-12-09--clan-issime--7-dias.jpg" width="308" height="415" title="Revista 7 Días, diciembre 2013"></li>
+         -->
+        </ul>
+    <div class="clear"></div>
+    </div>  
+</section>
+<script type="text/javascript">
+    $(document).ready( function(){
+        $("#cancelar").hide();
+        var cancelar = false;
+        $("#imagenPrensa").on("change", function(){
+            if(cancelar == false)
+            {
+                 $("#cancelar").show();
+                cancelar = true;
+            }
+            
+            var fileReader = new FileReader();
+            fileReader.readAsDataURL(this.files[0]);
+            fileReader.onloadend = function(event){
+                $(".cargaImgPrensa").show();
+                $("#prevPrensa").attr("src", event.target.result);
+            }
+
+        });
+
+        $("#cancelar").on("click", function(){
+            console.log("cancelado");
+            $("#prevPrensa").removeAttr("src");
+            $("#imagenPrensa").val("");
+            $(".cargaImgPrensa").hide();
+            cancelar = false;
+            $("#cancelar").hide();
+        });
+
+        $(".eliminar").on("click", function(){
+            if (confirm("Está a punto de eliminar esta imagen. ¿Desea continuar?"))
+            {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                  type: "POST",
+                  url: "../php/admin/eliminarPrensa.php",
+                  data: {"id": id},
+                  success: function(datos){
+                    location.reload();
+                  }
+                });
+            }
+            
+        });
+    });
+</script>

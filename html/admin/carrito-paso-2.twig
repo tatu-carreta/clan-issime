@@ -1,0 +1,52 @@
+<script type="text/javascript" src="{{ paths.PATH_JS }}usuarioFuncs.js"></script>
+<script src="{{ paths.PATH_JS }}dataMayoristaFuncs.js"></script>
+<script src="{{ paths.PATH_JS }}pedidoFuncs.js"></script>
+<section>
+    <h2>Tus datos</h2>
+    <!-- div registro -->
+    <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="formRegistroPedido">
+    <div class="contentRegistro">
+        
+            <div class="datosPersonales">
+                <h4>Datos personales</h4>
+                <label>Nombre:<br><input type="text" name="nombre" value="{{ datosPersona.nombrePersona }}"></label>
+                <label>Apellido:<br><input type="text" name="apellido" value="{{ datosPersona.apellidoPersona }}"></label>
+                <label>E-mail:<br><input type="email" name="email" value="{{ datosPersona.email }}"></label><br>
+
+
+                <label>Calle:<br><input type="text" name="calle" value="{{ datosPersona.calle }}"></label>
+                <label>Nº:<br><input type="text" name="numero" value="{% if datosPersona.numero == 0 %}-{% else %}{{ datosPersona.numero }}{% endif %}"></label>
+                <label>Piso:<br><input type="text" name="piso" value="{{ datosPersona.piso }}"></label><br>
+                <label>Departamento:<br><input type="text" name="departamento" value="{{ datosPersona.departamento }}"></label>
+                <label>Provincia:<br>
+                    <select class="selectProvincia" name="provincia">
+                        <option value="">Seleccione una Provincia</option>
+                        {% for prov in provincias %}
+                        <option value="{{ prov.idProvincia }}" {% if(prov.idProvincia == datosPersona.idProvincia) %}selected{% endif %}>{{ prov.nombreProvincia }}</option>
+                        {% endfor %}
+                    </select></label>
+                <label>Localidad:<br>
+                    <select class="selectLocalidad" name="localidad">
+                        {% for loc in localidades %}
+                        <option value="{{ loc.idCiudad }}" {% if(loc.idCiudad == datosPersona.idCiudad ) %}selected{% endif %}>{{ loc.nombreCiudad }}</option>
+                        {% else %}
+                        <option value="">Seleccione una Localidad</option>
+                        {% endfor %}
+                    </select></label>
+                <label>Código Postal:<br><input type="text" name="codPostal" value="{{ datosPersona.codigoPostal }}"></label>
+                <label>Teléfono:<br><input type="text" name="telefono" value="{{ datosPersona.telefono }}"></label>{# replace({ ("-"): "/" })|reverse #}
+                <label class="fechaNac">Fecha de nacimiento:<br><input type="text" name="fecNac" value="{{ datosPersona.fechaNacimiento|date('d/m/Y') }}">Formato: (dd/mm/aaaa)<br><span>*opcional para recibir ofertas especiales</span></label>
+                <div class="clear"></div>
+            </div>
+
+            <div class="clear"></div>
+
+        
+    </div>
+    <!-- div registro -->
+ 
+    <input type="hidden" name="section" value="realizarPedido">
+    <input type="hidden" name="idPersona" value="{{ datosPersona.idPersona }}">
+    <input type="submit" value="Enviar" class="btnGris">
+    </form>
+</section>

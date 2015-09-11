@@ -1,0 +1,11 @@
+<section>
+    <div class="login">
+        <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post">
+            <p><label><span>Nombre Usuario:</span> <input type="text" name="user"></label></p>
+            <p><label><span>Contraseña:</span> <input type="password" name="pass"></label></p>
+            <input type="hidden" name="section" value="inicio">
+            <input type="hidden" name="continue" value="{{ continue }}">
+            <input class="btnGris" type="submit" value="Ingresar">
+        </form>
+    </div>
+</section>

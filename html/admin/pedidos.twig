@@ -1,0 +1,147 @@
+<script type="text/javascript" src="{{ paths.PATH_JS }}jquery-ui-1.10.3.custom.js"></script>
+<script src="{{ paths.PATH_JS }}pedidoFuncs.js"></script>
+<script>
+    $(function() {
+        $("#accordion").accordion();
+    });
+    </script>
+
+    <section class="administrador">
+        <form action="{{ paths.PATH_CONTROLLER }}controladorAdmin.php" method="get" class="formularioBusquedaPedido">
+            <div class="boxBuscar">
+
+                <input class="buscar" type="text" name="buscar" placeholder="buscar" value="{% if (datoBusqueda is not null) %}{{ datoBusqueda }}{% endif %}">
+                <input type="hidden" name="seccion" value="pedidos">
+                <input class="btnBuscar" type="submit" value="">
+                <a href="" class="cerrar"><span>Cerrar</span></a>
+            </div>
+            <h2>PEDIDOS MAYORISTAS Y MINORISTAS</h2>
+            <h3>Lista de Pedidos</h3>
+            <table class="encabezadoAcordeon tdListaPedidos">
+                <tr>
+                    <td>CLIENTE</td>
+                    <td>
+                        <select class="tipoPersona" name="tipoPersona">
+                            {% for tipos in tipPerson %}
+                                <option value="{{ tipos.values }}" {% if(tipos.values == tipoPersona) %}selected{% endif %}>{{ tipos.nombreTipo }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>N° PEDIDO</td>
+                    <td>FECHA</td>
+                    <td>
+                        <select class="tipoPedido" name="estadoPedido">
+                            {% for estados in estPedido %}
+                                <option value="{{ estados.values }}" {% if(estados.values == estadoPedido) %}selected{% endif %}>{{ estados.nombreEstado }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+        <div id="accordion">
+            {% for datoPedido in pedidos %}
+                <h3>
+                    <table class="tablaListaPedidos tdListaPedidos">
+                        <tr>
+                            <td>{{ datoPedido.datosPersona.apellidoPersona }} {{ datoPedido.datosPersona.nombrePersona }}</td>
+                            <td>{% if(datoPedido.datosPersona.idMayorista is not null) %}Mayorista{% elseif (datoPedido.datosPersona.idMinorista is not null) %}Minorista{% else %}Sin Registrar{% endif %}</td>
+                            <td>{{ datoPedido.datosPersona.idPedido }}</td>
+                            <td>{{ datoPedido.datosPersona.fechaPedido|date('d/m/Y') }}</td>
+                            <td>
+                                <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="formularioModificarPedido">
+                                <select class="seleccionEstadoNuevo" name="estadoNuevo">
+                                    {% for estados in estPedido %}
+                                        {% if (estados.values != -1) %}
+                                            <option value="{{ estados.values }}" {% if(estados.values == datoPedido.datosPersona.estadoPedido) %}selected{% endif %}>{{ estados.nombreEstado }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                    <input type="hidden" name="section" value="modificarPedido">
+                                    <input type="hidden" name="idPedido" value="{{ datoPedido.datosPersona.idPedido }}">
+                                </form>
+                            </td>
+                            <td><a class="estadoPedido iniciado {{ datoPedido.datosPersona.estadoPedido }}"></a></td>
+                            <td>
+                                <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="formularioEliminarPedido">
+                                    <input type="hidden" name="idPedido" value="{{ datoPedido.datosPersona.idPedido }}">
+                                    <input type="hidden" name="section" value="borrarPedido">
+                                    <input type="submit" value="" class="btnCerrarGris eliminarPedido">
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </h3>
+                <div class="divDatosPedido">
+                    <!-- tabla carrito-->
+                    <table class="artPedido">
+                        <tr>
+                            <th>Foto</th>
+                            <th>Art / Nombre / Color</th>
+                            <th>Talle</th>
+                            <th>Precio Unit.</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    {% for articulos in datoPedido.arts %}
+                        {% for colores in articulos.colores %}
+                        <tr>
+                            <td><img class="imgArtPedido" src="{{ paths.PATH_IMAGES_CATALOGO }}{{ colores.datosColor.nombreImagen }}" alt="{{ colores.datosColor.nombreImagen }}"></td>
+                            <td>
+                                <span>{{ articulos.datosArticulo.codigoArticulo }}</span><br>
+                                <span>{{ articulos.datosArticulo.nombreArticulo }}</span> /
+                                <span>{{ colores.datosColor.nombreColor }}</span>
+                            </td>
+                            <td colspan="3">
+                                    {% for talles in colores.talles %}
+                                    <table>
+                                        <tr>
+                                            <td>{{ talles.nombreTalle }}</td>
+                                            <td>${{ talles.precioUnidad }}</td>
+                                            <td>{{ talles.cantidad }}</td>
+                                        </tr>
+                                    </table>
+                                        {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                            <tr>
+                                <td colspan="5">Link de Mercadopago: <a href="{{ datoPedido.datosPersona.linkCompra }}">{{ datoPedido.datosPersona.linkCompra }}</a></td>
+                            </tr>
+                        </table>
+                        <!--abre más detalles-->
+                        <table>
+                            <tr>
+                                <td>
+                                    <span>Nombre: {{ datoPedido.datosPersona.nombrePersona }}</span><br>
+                                    <span>Apellido: {{ datoPedido.datosPersona.apellidoPersona }}</span><br>
+                                    <span>Cliente: {% if(datoPedido.datosPersona.idMayorista is not null) %}Mayorista{% elseif (datoPedido.datosPersona.idMinorista is not null) %}Minorista{% else %}Sin Registrar{% endif %}</span><br>
+                                    <span>Teléfono: {{ datoPedido.datosPersona.telefono }}</span><br>
+                                    <span>Email: {{datoPedido.datosPersona.email }}
+                                </td>
+                                <td>
+                                    <span>Dirección: {{ datoPedido.datosPersona.calle }} Nº{{ datoPedido.datosPersona.numero }} {{ datoPedido.datosPersona.piso }}{{ datoPedido.datosPersona.departamento }}</span><br>
+                                    <span>Ciudad: {{ datoPedido.datosPersona.nombreCiudad }}</span><br>
+                                    <span>Código Postal: {{ datoPedido.datosPersona.codigoPostal }}</span><br>
+                                    <span>Provincia: {{ datoPedido.datosPersona.nombreProvincia }}</span><br>
+                                    <span>Cumpleaños: {{ datoPedido.datosPersona.fechaNacimiento|date('d/m/Y') }} (Edad: {{ datoPedido.datosPersona.edad }})</span>
+                                </td>
+                                <td>
+                            {% if(datoPedido.datosPersona.cuit is not null) %}
+                                        <span>Nombre Fantasía: {{ datoPedido.datosPersona.nombreFantasia }}</span><br>
+                                        <span>Razón Social: {{ datoPedido.datosPersona.razonSocial }}</span><br>
+                                        <span>Cond.Iva: {{ datoPedido.datosPersona.nombreCondicionIva }}</span><br>
+                                        <span>CUIT: {{ datoPedido.datosPersona.cuit }}</span>
+                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                {% else %}
+                <span>No se encontraron pedidos con esas especificaciones.</span>
+                {% endfor %}
+                        </div><!-- Cierra #accordion -->
+                        <!--------------------------------------->
+                    </section>

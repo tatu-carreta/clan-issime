@@ -1,0 +1,126 @@
+<script type="text/javascript">
+    {% autoescape false %}
+	categoriaURL = "{{nombreCategoriaURL}}";
+    idCategoria = {{ articulo[0].idCategoria }};
+	maxIdColor = {{ maxIdColor }};
+	maxIdImagen = {{ maxIdImagen }};
+	idArticulo = {{ articulo[0].idArticulo}} ;
+	{% set numTalles = 0%}
+	nombreCategoriaTalle = '{% for cat in catTalles%}{% if articulo[0].idCategoriaTalle == cat.idCategoriaTalle %}{{cat.nombreCategoriaTalle}}{% endif %}{% endfor%}';
+    {% endautoescape %}
+	numeroDeTalles = {% for talle in arrayColores[0].talles%}{% set numTalles = numTalles + 1 %}{% endfor%}{{numTalles}};
+	coloresArrayDB = [];
+	{% for cor in arrayColores %}
+		arrayTalles = [];
+		{% for tall in cor.talles %}
+				arrayTalles.push({{tall.valor}});
+		{% endfor %}
+		dataArray = [];
+		{% for img in cor.imgChicas%}
+			dataArray.push({id: {{img.idImagen}} , imagen: "{{paths.PATH_IMAGES_CATALOGO}}{{img.nombreImagen}}", name: "{{img.nombreImagen}}", value: "{{paths.PATH_IMAGES_CATALOGO}}{{img.nombreImagen}}" });
+		{% endfor%}	
+		coloresArrayDB.push({id: {{cor.color.idColor}} , nombre: "{{cor.color.nombreColor}}", talles: arrayTalles, dataArray: dataArray});	
+	{% endfor %}
+	console.log(coloresArrayDB);
+
+</script>
+<script src="{{ paths.PATH_JS }}jquery.numeric.js"></script>
+<script src="{{ paths.PATH_PHP_MODULES_IMAGES }}jqFuncsEdit.js"></script>
+<section class="section administrador">
+    <h2>Cargar y editar artículo</h2>
+    <!-- div detalle del artículo -->
+    <div class="contentDatosArticulo">
+        <form id ="formArticulo" action="" method="">
+            <h3>Categoría {{ articulo[0].nombreCategoria}} / Artículo: <input type="text" name="codigo" class="editable sinBorde nombreArticulo" value="{{articulo[0].codigoArticulo}}"> </h3>
+            <div class="muestraArt">
+                <a href="#"><img class="portada" src="{{ paths.PATH_IMAGES_CATALOGO }}{{articulo[0].nombreImagen}}" alt="Clan Issime"></a>
+                <!---- <a class="nuevo" href="#"><span>nuevo</span></a>
+                <a class="oferta" href="#"><span>oferta</span></a> --->
+            </div>
+            <input type="file" accept="image/*" id="imgDestacada" name="imgDestacada" style="display:none">
+            <div class="datosArticulo">
+
+                <table>
+                    <tr>
+                        <td>
+                            <p>Nombre: <input name="nombre" class="editable sinBorde" value="{{articulo[0].nombreArticulo}}"/></p>
+                            <p>Material: <input name="material" class="editable sinBorde" value="{{articulo[0].material}}"/></p>
+                            <p>Precio mayorista: <span class="editable">$</span><input name="precioMayorista" class="precioMayorista editable sinBorde" value="{{articulo[0].precioMayorista}}"/></p>
+                            <p>Precio minorista: <span class="editable">$</span><input name="precioMinorista" class="precioMinorista editable sinBorde" value="{{articulo[0].precioMinorista}}"/></p>
+                        </td>
+                        <td>
+                            talles
+                        </td>
+                        <td>
+						{% for cat in catTalles%}
+						
+						
+                            <p><input type="radio" class="tipoDeTalles" disabled="disabled"  name="talles" value="{{cat.idCategoriaTalle}}" id="{{cat.nombreCategoriaTalle}}" {% if articulo[0].idCategoriaTalle == cat.idCategoriaTalle %}checked="checked" {% endif %} />
+                                <label for="{{cat.nombreCategoriaTalle}}">{{cat.descripcion}}</label></p>
+
+ 
+								
+						{% endfor %}
+                        </td>
+                        <td>
+                            estado
+                        </td>
+                        <td>
+                            <p><input type="radio" name="estado" id="nuevo" value="N" {% if articulo[0].ofertaNuevo == "N" %}checked="checked" {% endif %}/>
+                                <label for="nuevo">nuevo</label></p>
+
+                            <p><input type="radio" name="estado" id="oferta" value="O" {% if articulo[0].ofertaNuevo == "O" %}checked="checked" {% endif %} />
+                                <label for="oferta">oferta</label></p>
+
+                            <p><input type="radio" name="estado" id="normal" value="R" {% if articulo[0].ofertaNuevo == "R" %}checked="checked" {% endif %} />
+                                <label for="normal">normal</label></p>
+                        </td>
+                    </tr>
+                </table>
+        </form>
+    </div>
+    <div class="clear"></div>
+</div><!-- cierra div detalle del artículo -->
+
+<!-- abre detalles de colores -->
+<div id="uploader" class="contentAgregarColores">
+    <h4>Colores de este artículo:</h4>
+    <a id="agregarColor" >Agregar color</a>
+    <div class="contentColores">
+		{% for cor in arrayColores%}
+		
+				<div class="cadaColor dropzone" data="'{{cor.color.idColor}}'"  > 
+                <ul class="list listaImgCadaColor">
+                        <li><a class="agregarFoto" href="#">Agregar foto</a>	<input type="file" accept="image/*" class="imgColor" name="imgColor" style="display:none"> </li>
+                        {% for img in cor.imgChicas %}
+							<li><img class="thumb" data="{{img.idImagen}}" src="{{ paths.PATH_IMAGES_CATALOGO}}{{img.nombreImagen}}" title="''"/><a href="#" class="eliminarImagen" onclick="eliminarImagen({{img.idImagen}}, $(this)); return false;">X</a></li>
+						{% endfor %}
+                </ul>
+				<div class="checkers">
+				{% set counter = 0 %}
+				{% for talle in cor.talles%}
+					<label class="labelTalle">{{talle.nombreTalle}}</label>
+                    <input data="{{cor.color.idColor}}" class="check" type="checkbox" name="{{talle.nombreTalle}}" id="{{counter}}" {% if talle.valor == '1' %} checked="checked"{% endif %}>
+                     {% set counter = counter +1%}  
+				{% endfor %}
+                </div>
+                <p class="pNombreColor">Nombre color: <input type="text" class="editable sinBorde nombreColor" value="{% if cor.color.nombreColor == '' %}nombre del color{%else%}{{cor.color.nombreColor}}{%endif%}" /></p><a href="" class="eliminar">eliminar color</a>
+        </div>
+		{% endfor %}
+    
+        <div class="clear"></div>
+      
+	  <a id="publicar" class="btnCeleste marginRight15" a>Publicar<a/><a href="{{paths.PATH_CONTROLLER}}controladorCatalogo.php?categoria={{nombreCategoriaURL}}"  d="" class="btnGris" a>Cancelar<a/> 
+	  
+
+
+    </div>
+<div class="clear"></div>
+
+</div>
+<!-- cierra detalles de colores -->
+
+
+
+</section>
+

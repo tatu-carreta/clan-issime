@@ -1,0 +1,79 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+<link href="../css/estilos.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="container catalogo">
+
+<section>
+	<h2>Tu compra</h2>
+        <div class="pasosRegistroCompra">
+            <div class="columnaRegistroCompra">
+                <p>Si te registrás accedés a
+                muchos beneficios y simplificás tus próximas compras</p>
+                <input type="submit" value="Registrarme ahora" class="btnGris">
+                <p><a href="">Comprar sin registrarme</a></p>
+            </div>
+            <div class="columnaRegistroCompra">
+                  <label>Email<br><input type="email" name=""></label><br>
+                    <label>Clave<br><input type="email" name=""></label>
+                    <p><a class="" href="">¿Olvidaste tu clave?</a></p>
+                    <input type="submit" class="btnGris" value="Ingresar">
+            </div>
+            <div class="columnaRegistroCompra sinMargen">
+                <p>Podés acceder usando<br>
+                    tu cuenta de Facebook</p>
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+        <h2>Tus datos</h2>
+	<!-- div registro -->
+        <div class="contentRegistro">
+            <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="formRegistroUsuario">
+                <div class="datosPersonales">
+                    <h4>Confirmá que tus datos estén actualizados</h4>
+                    <label>Nombre:<br><input type="text" name="nombre"></label>
+                    <label>Apellido:<br><input type="text" name="apellido"></label>
+                    <label>E-mail:<br><input type="email" name="email"></label><br>
+                    
+                    
+                   <label>Calle:<br><input type="text" name="calle"></label>
+                    <label>Nº:<br><input type="text" name="numero"></label>
+                    <label>Piso:<br><input type="text" name="piso"></label><br>
+                    <label>Departamento:<br><input type="text" name="departamento"></label>
+                    <label>Provincia:<br>
+                        <select class="selectProvincia" name="provincia">
+                            <option value="">Seleccione una Provincia</option>
+                                                        {% for prov in provincias %}
+                            <option value="{{ prov.idProvincia }}">{{ prov.nombreProvincia }}</option>
+                                                        {% endfor %}
+                        </select></label>
+                    <label>Localidad:<br>
+                        <select class="selectLocalidad" name="localidad">
+                            <option value="">Seleccione una Localidad</option>
+                        </select></label>
+                    <label>Código Postal:<br><input type="text" name="codPostal"></label>
+                    <label>Teléfono:<br><input type="text" name="telefono"></label>
+                    <label class="fechaNac">Fecha de nacimiento:<br><input type="text" name="fechaNac">Formato: (dd/mm/aaaa)<br><span>*opcional para recibir ofertas especiales</span></label>
+                    <div class="clear"></div>
+                </div>
+                
+                <div class="clear"></div>
+
+            </form>
+        </div>
+        <!-- div registro -->
+        <div class="contentRegistro">
+            <p style="color:red">Averiguar Datos OCA</p>
+        </div>
+        <input type="submit" value="Enviar" class="btnGris">
+</section>
+
+</div>
+</body>
+</html>

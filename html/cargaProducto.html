@@ -1,0 +1,135 @@
+﻿<!Doctype html>
+<html>
+<head>
+<link href="../css/estilos.css" rel="stylesheet">
+<link href='http://fonts.googleapis.com/css?family=Ruda:400,700,900' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+
+
+<script type="text/javascript" src="../js/jquery-1.9.1.js" ></script>
+
+<!-- Plugin BxSlider, catálogo de productos-->
+<script type="text/javascript" src="../js/jquery.bxslider.min.js" ></script>
+<script language="javascript">
+$(document).ready(function(){
+	$('.slideFotoAmpliada').bxSlider({
+	  mode: 'horizontal',
+	  captions: true
+	});
+});
+</script>
+	
+	<!-- Plugin para estilos del form-->
+<link rel="stylesheet" href="../css/jqtransform.css" type="text/css" media="all" />
+<script type="text/javascript" src="../js/jquery.jqtransform.js" ></script>
+<script language="javascript">
+		$(function(){
+			$('form').jqTransform({imgPath:'../images/form/'});
+		});
+</script>
+
+</head>
+<body>
+<div class="container catalogo">
+
+<section>
+	<h2>Cargar y editar artículo</h2>
+	<!-- div detalle del artículo -->
+	<div class="contentDatosArticulo">
+		<h3>Pantalones <span>Artículo: </span><span class="editable">00412503gaba4</span></h3>
+		<div class="muestraArt">
+				<a href="#"><img src="../images/producto.jpg" alt="Clan Issime"></a>
+				<a class="nuevo" href="#"><span>nuevo</span></a>
+				<a class="oferta" href="#"><span>nuevo</span></a>
+		</div>
+		<div class="datosArticulo">
+			<form action="" method="">
+				<table>
+					<tr>
+						<td>
+							<p>Nombre: <span class="editable">Capri crimo</span></p>
+							<p>Material: <span class="editable">gabardina</span></p>
+							<p>Precio mayorista: <span class="editable">$199</span></p>
+							<p>Precio minorista: <span class="editable">$379</span></p>
+						</td>
+						<td>
+							talles
+						</td>
+						<td>
+							<p><input type="radio" name="talles" value="01 al 04" id="t01" checked="checked" />
+							<label for="t01">01 al 04</label></p>
+							
+							<p><input type="radio" name="talles" value="40 al 48" id="t40"/>
+							<label for="t40">40 al 48</label></p>
+							
+							<p><input type="radio" name="talles" value="22 al 26" id="t22"/>
+							<label for="t22">22 al 26</label></p>
+							
+							<p><input type="radio" name="talles" value="calzado dama" id="cd" />
+							<label for="cd">calzado dama</label></p>
+							
+							<p><input type="radio" name="talles" value="ropa niños" id="rn"/>
+							<label for="rn">ropa niños</label></p>
+							
+							<p><input type="radio" name="talles" value="calzado niños" id="cn" />
+							<label for="cn">calzado niños</label></p>
+						</td>
+						<td>
+							estado
+						</td>
+						<td>
+							<p><input type="radio" name="estado" id="nuevo" value="nuevo" checked="checked" />
+							<label for="nuevo">nuevo</label></p>
+							
+							<p><input type="radio" name="estado" id="oferta" value="oferta" />
+							<label for="oferta">oferta</label></p>
+							
+							<p><input type="radio" name="estado" id="normal" value="normal" />
+							<label for="normal">normal</label></p>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class="clear"></div>
+	</div><!-- cierra div detalle del artículo -->
+	
+	<!-- abre detalles de colores -->
+	<div class="contentAgregarColores">
+		<h4>Colores de este artículo</h4>
+			<a id="agregarColor" href="">Agregar color</a>
+		<div class="contentColores">
+			<div class="cadaColor dropzone">
+				<ul class="listaImgCadaColor">
+					<li><a href="">Agregar foto</a></li>
+					<li><img src="../images/producto.jpg" alt="Clan Issime"><a href="" class="eliminarImagen">Eliminar Imagen</a></li>
+					<li><img src="../images/producto.jpg" alt="Clan Issime"></li>
+				</ul>
+				<div class="">
+					<label for="t24" class="labelTalle">24</label>
+					<input class="check" type="checkbox" name="talle24" id="t24">
+					<label for="t26" class="labelTalle active">26</label>
+					<input class="check" type="checkbox" name="talle26" id="t26">
+					<label for="t28" class="labelTalle">28</label>
+					<input class="check" type="checkbox" name="talle28" id="t28">
+					<label for="t30" class="labelTalle">30</label>
+					<input class="check" type="checkbox" name="talle30" id="t30">
+					<label for="t32" class="labelTalle">32</label>
+					<input class="check" type="checkbox" name="talle32" id="t32">
+				</div>
+				<p class="nombreColor">Nombre color: <span class="editable">estampado rojo</span></p>
+				<a href="" class="eliminar">eliminar color</a>
+			</div>
+			<input type="submit" value="publicar" class="btnCeleste marginRight15">
+			<input type="submit" value="cancelar" class="btnGris">
+		</div>
+		<div class="clear"></div>
+	</div>
+	<!-- cierra detalles de colores -->
+	
+</section>
+
+</div>
+</body>
+</html>

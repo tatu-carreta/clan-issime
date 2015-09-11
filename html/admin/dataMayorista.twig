@@ -1,0 +1,53 @@
+<script src="{{ paths.PATH_JS }}dataMayoristaFuncs.js"></script>
+<div class="clear"></div>
+<div class="direccionEnvio">
+    <h4>Datos de Facturación</h4>
+    <label>CUIT:<input type='text' name='cuit'></label>
+    <label>Condición Iva:<select name='condIva' class="condIva">
+            <option value=''>Seleccione una Condición</option>
+        {% for cond in condiciones%}
+            <option value='{{ cond.idCondicionIva }}'>{{ cond.nombreCondicionIva }}</option>
+        {% endfor %}
+        </select></label>
+    <label>Razón Social:<input type='text' name='razonSocial'></label>
+    <label>Nombre de Fantasía:<input type='text' name='nombreFantasia'></label>
+<div class="clear"></div>
+</div>
+<div class="direccionEnvio">
+    <h4>Dirección de Envío</h4>
+    <label>Calle:<br><input type="text" name="calle"></label>
+    <label>Nº:<br><input type="text" name="numero"></label>
+    <label>Piso:<br><input type="text" name="piso"></label><br>
+    <label>Departamento:<br><input type="text" name="departamento"></label>
+    <label>Provincia:<br><select class="selectProvincia" name="provincia">
+            <option value="">Seleccione una Provincia</option>
+					{% for prov in provincias %}
+            <option value="{{ prov.idProvincia }}">{{ prov.nombreProvincia }}</option>
+					{% endfor %}
+        </select></label>
+    <label>Localidad:<br><select class="selectLocalidad" name="localidad">
+            <option value="">Seleccione una Localidad</option>
+        </select></label>
+    <label>Código Postal:<br><input type="text" name="codPostal"></label>
+    <label>Teléfono:<br><input type="text" name="telefono"></label><br>
+    <div class="clear"></div>
+</div>
+<div class="direccionEnvio">
+    <h4>Dirección Fiscal</h4>
+    <label>Calle:<br><input type="text" name="calleFiscal"></label>
+    <label>Nº:<br><input type="text" name="numeroFiscal"></label>
+    <label>Piso:<br><input type="text" name="pisoFiscal"></label><br>
+    <label>Departamento:<br><input type="text" name="departamentoFiscal"></label>
+    <label>Provincia:<br><select class="selectProvinciaFiscal" name="provinciaFiscal">
+            <option value="">Seleccione una Provincia</option>
+					{% for prov in provincias %}
+            <option value="{{ prov.idProvincia }}">{{ prov.nombreProvincia }}</option>
+					{% endfor %}
+        </select></label>
+    <label>Localidad:<br><select class="selectLocalidadFiscal" name="localidadFiscal">
+            <option value="">Seleccione una Localidad</option>
+        </select></label>
+    <label>Código Postal:<br><input type="text" name="codPostalFiscal"></label>
+    <label>Teléfono:<br><input type="text" name="telefonoFiscal"></label><br>
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,41 @@
+<script type="text/javascript" src="{{ paths.PATH_JS }}usuarioFuncs.js"></script>
+
+<section>
+    <h2>Registrate</h2>
+    <!-- div registro -->
+    <div class="contentRegistro">
+        <form action="{{ paths.PATH_CONTROLLER }}controladorAdminModel.php" method="post" class="formRegistroUsuario">
+            <div class="datosPersonales">
+                <h4>Datos personales</h4>
+                <label>Nombre:<br><input type="text" name="nombre"></label>
+                <label>Apellido:<br><input type="text" name="apellido"></label>
+                <label>E-mail:<br><input type="email" name="email"></label><br>
+                <label>Clave:<br><input type="password" name="clave"></label>
+                <label>Reingresá la clave:<br><input type="password" name="confirmClave"></label>
+                <label class="fechaNac">Fecha de nacimiento:<br><input type="text" name="fechaNac">Formato: (dd/mm/aaaa)<br><span>*opcional para recibir ofertas especiales</span></label><br>
+                <div class="clear"></div>
+            </div>
+           <div class="direccionEnvio">
+                <label>Tipo:<br>
+                    <select class="tipoUsuario" name="tipoUsuario" required>
+                        <option value="min">Minorista</option>
+                        <option value="may">Mayorista</option>
+                    </select>
+                </label>
+                <div class="clear"></div>
+                </div>
+                <div id="datoMayorista">
+
+                </div>
+            
+            {% autoescape false %}
+                {{ reCaptcha }}
+            {% endautoescape %}
+            <input type="hidden" name="porter" class="continue" value="{{ continue }}">
+            <input type="hidden" name="porter2" class="reg" value="{{ reg }}">
+            <input type="hidden" name="section" value="registro">
+            <input type="submit" value="Enviar" class="btnGris">
+        </form>
+        
+    </div>
+</section>

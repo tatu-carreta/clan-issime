@@ -1,0 +1,28 @@
+<section>
+    
+    <h2>Consultas</h2>
+    <p>Podés contactarte con nosotros completando el siguiente formulario </p>
+    <form action="/cgi-bin/formtomail.cgi" method="post">
+        <p>
+            <input name="recipient" type="hidden" id="recipient" value="contactos@clan-issime.com">
+            <input name="redirect" type="hidden" id="redirect" value="http://www.clan-issime.com/confirma.html">
+            <input name="subject" type="hidden" id="subject" value="Mensaje desde página Consultas">                    
+            Nombre y Apellido:<br>
+            <input name="realname" type="text" class="campos-form" id="realname" required>
+        </p>
+        <p>E-mail:<br>
+            <input name="email" type="text" class="campos-form" id="email" required>
+        </p>
+        <p>Mensaje:<br>
+            <textarea name="mensaje" cols="40" rows="6" class="" id="mensaje" required></textarea>
+        </p>
+        <p>Frecuencia de visita en la web:<br>
+            <input name="frecuencia de visita" type="text" class="campos-form" id="frecuencia de visita">
+        </p>
+        <p>
+            <input name="button" type="submit" id="button" value="Enviar" class="btnGris">                    
+            <br>
+            <br>
+        </p>
+    </form>
+</section>

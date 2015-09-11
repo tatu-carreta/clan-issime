@@ -1,0 +1,37 @@
+--------------  MAXI  -----------------
+
+
+
+
+--------------  EUGE  -----------------
+
+- triangulo nuevo va ROJO #D90000 / triángulo oferta va VERDE MILITAR  #808B30
+- en el footer no va pokepath
+- home: loguito face le falta hover
+- menu no están centrados!
+- carga de productos: falta botón cancelar (gris está en el png)
+- pedidos: por qué tanto espacio blanco debajo de un pedido?
+- pedidos y clientes: el cursor debería cambiar a manito sobre el gris (o quedar puntero, no cursor)
+
+
+--------------  IAN  -----------------
+-categorías: no guarda los cambios el mensaje dice: undefined (sacar las inventadas!!)
+-en detalle de producto, corregir tamaño de la foto ampliada
+-en las categorías y en nuevo producto: no cambia el título de categoría (en editar producto si) y debería ser vínculo para volver a la lista de productos.
+-en el catálogo se tiene que ver por defecto sólo precio minorista
+-en editar producto: arreglar al ventana que confirma que se guardó
+-en nuevo producto cuando subo una segunda foto no la muestra (pero la publica)
+-en detalle producto, abajo del carusel no cambia el nombre del color
+-en categorias, cuando la campaña es nueva no se pueden ordenar las categorías? hay que guardar primero?
+-lista clientes y pedidos: que no empiece con el primero abierto
+
+
+--------------  YO  -----------------
+
+- buscar pago con campo en Mercadopago
+- categorías: hacer una lista de categorías por defecto
+
+
+-------------- con euge -------------
+-en registro de usuarios 1) revisar diseño de los títulos 2) el formualrio de mi perfil, dividirlo en 3 partes: datos principales, cambio de contraseña, datos de envíos. 3) cuando temrino de registrarme aparecen todas las ventanas ocultas juntas!!!
+- cuando hago una compra, al finalizar no sale la ventanita que yo diseñé... 
