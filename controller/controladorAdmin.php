@@ -769,8 +769,8 @@ if (isset($_GET['seccion']) && is_string($_GET['seccion'])) {
 
                     $ciudades = array();
 
-                    //$url2 = "admin/carrito-paso-2.twig";
-                    $url2 = "admin/carrito-paso-2-error.twig";
+                    $url2 = "admin/carrito-paso-2.twig";
+                    //$url2 = "admin/carrito-paso-2-error.twig";
                     if (isset($_SESSION['user_name']) && (isset($_SESSION['ip_user'])) && ($_SESSION['private'] == $_SESSION['private_alternative']) && ($_SESSION['user_type'] != 1)) {
 
                         $datosPersona = obtenerInfoUsuarioPorIderUser(sanearDatos($_SESSION['iderUser']));
@@ -780,8 +780,8 @@ if (isset($_GET['seccion']) && is_string($_GET['seccion'])) {
                         }
                     } else {
                         if (!isset($_GET['reg']) || (sanearDatos($_GET['reg']) != "sr" )) {
-                            //$url2 = "admin/registroLogin.twig";
-                            $url2 = "admin/carrito-paso-2-error.twig";
+                            $url2 = "admin/registroLogin.twig";
+                            //$url2 = "admin/carrito-paso-2-error.twig";
                         }
                     }
 

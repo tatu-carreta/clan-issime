@@ -10,7 +10,7 @@ if (isset($redirectAdmin)) {
 if (!isset($_SESSION['carro'])) {
     $_SESSION['carro'] = array(); //variable de session que lleva los artículos del carrito.           
 }
-$localhost = false; //define si se esta trabajando a modo local o no
+$localhost = true; //define si se esta trabajando a modo local o no
 $proyecto = "Clan-Issime";
 switch ($_SERVER['HTTP_HOST']) {
     case "www.clan-issime.com":
@@ -32,8 +32,8 @@ define("URL_LOCAL", "http://localhost/clan-issime/");
 
 
 //INFORMACIÓN RECAPTCHA
-define("RECAPTCHA_PUBLIC_KEY", "6LeCzewSAAAAAFrMloUH_XgKqvIuajb9-1sA80OW");
-define("RECAPTCHA_PRIVATE_KEY", "6LeCzewSAAAAALcoUW2IK8dJV6l0kQVFPIbmSu2x");
+define("RECAPTCHA_PUBLIC_KEY", "6LeNKB4TAAAAAGavx0zMksjnqkSxEVmFVayRoZHO");
+define("RECAPTCHA_PRIVATE_KEY", "6LeNKB4TAAAAAPjCxX0ctk0-iI74BCSN0D-9hze-");
 
 if (!$localhost) {
     define("DB_HOST", "190.228.29.58");

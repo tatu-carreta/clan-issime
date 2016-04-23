@@ -83,9 +83,9 @@
         </table>
         <div>
             <a class="btnGris" href="{% if localhost %}{% if (seguirComprando is defined) %}{{paths.PATH_CONTROLLER}}controladorCatalogo.php?categoria={{ seguirCategoria }}{% else %}{{ paths.PATH_CONTROLLER }}controladorVista.php?seccion=index{% endif %}{% else %}{% if (seguirComprando is defined) %}{{paths.PATH_HOME}}catalogo/{{ seguirCategoria }}{% else %}{{ paths.PATH_HOME }}{% endif %}{% endif %}">Seguir Comprando</a>
-            {#<a class="btnGris" href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=carrito-paso-2{% else %}{{paths.PATH_HOME}}micarrito/carrito-paso-2{% endif %}">Finalizar compra</a>#}
+            <a class="btnGris" href="{% if localhost %}{{paths.PATH_CONTROLLER}}controladorAdmin.php?seccion=carrito-paso-2{% else %}{{paths.PATH_HOME}}micarrito/carrito-paso-2{% endif %}">Finalizar compra</a>
             
-            <span class="error" style="float:right">* Por el momento no se pueden realizar las compras online. <br>Tendremos el servicio en funcionamiento en los próximos días.</span>
+            {#<span class="error" style="float:right">* Por el momento no se pueden realizar las compras online. <br>Tendremos el servicio en funcionamiento en los próximos días.</span>#}
         </div>
     </section>
 

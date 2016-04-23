@@ -114,32 +114,31 @@ if ($infoValidate['estado']) {
                 }
             }
         }
-
-        if (!$localhost) {
-
-            if (isset($mp)) {
-                $preference = array(
-                    "items" => array(
-                        array(
-                            "title" => "Clan Issime",
-                            "quantity" => 1,
-                            "currency_id" => "ARS",
-                            "unit_price" => $montoTotal
-                        )
-                    )
-                );
-
-                $preferenceResult = $mp->create_preference($preference);
-
-                $url_mercado_pago = $preferenceResult['response']['init_point'];
-                //$url_mercado_pago = $preferenceResult['response']['sandbox_init_point'];
-            }
-
-            $linkCompra = $url_mercado_pago;
-        } else {
-            $linkCompra = "maxi";
-        }
-
+$linkCompra = "clan-issime";
+//        if (!$localhost) {
+//
+//            if (isset($mp)) {
+//                $preference = array(
+//                    "items" => array(
+//                        array(
+//                            "title" => "Clan Issime",
+//                            "quantity" => 1,
+//                            "currency_id" => "ARS",
+//                            "unit_price" => $montoTotal
+//                        )
+//                    )
+//                );
+//
+//                $preferenceResult = $mp->create_preference($preference);
+//                var_dump($preferenceResult);
+//                $url_mercado_pago = $preferenceResult['response']['init_point'];
+//                //$url_mercado_pago = $preferenceResult['response']['sandbox_init_point'];
+//                $linkCompra = $url_mercado_pago;
+//            }
+//
+//            
+//        }
+//        var_dump('p -> '.$idPersona." link -> ".$linkCompra." carr -> ".$iderCarro." total -> ".$montoTotal);
         $estadoRegistro = realizarRegistroPedido($idPersona, $linkCompra, $iderCarro, $montoTotal);
     } else {
         $estadoRegistro = -1;
